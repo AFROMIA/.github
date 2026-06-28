@@ -9,6 +9,12 @@ AFROMIA conçoit des technologies qui rapprochent les personnes de manière auth
 
 ---
 
+## Notre mission
+
+Offrir une expérience de rencontre et de connexion humaine où la technologie amplifie la compréhension mutuelle — pas l'inverse. Accent sur la personnalité, la compatibilité émotionnelle et une approche inclusive ancrée dans les cultures africaines et diasporiques.
+
+---
+
 ## État du projet
 
 | Document | Contenu |
@@ -18,7 +24,7 @@ AFROMIA conçoit des technologies qui rapprochent les personnes de manière auth
 | [Guide dev local](https://github.com/AFROMIA/.github/blob/main/docs/README.md) | Installation, URLs, dépannage |
 | [Démarrage rapide](https://github.com/AFROMIA/.github/blob/main/start.md) | `make dev` / `make dev-split` |
 
-**Synthèse juin 2026** : ~90 % backend écrit, ~85 % frontend — recette bout-en-bout ~25 %. Nouveautés livrées : channels créateur, wallet Safir, badges, intentions i18n, speed dating, contrat IA v2.
+**Synthèse juin 2026** : ~90 % backend écrit, ~85 % frontend — recette bout-en-bout ~25 %. Nouveautés : channels créateur, wallet Safir, badges, intentions i18n, speed dating, contrat IA v2.
 
 ---
 
@@ -26,7 +32,11 @@ AFROMIA conçoit des technologies qui rapprochent les personnes de manière auth
 
 ### [SAFIRI](https://github.com/AFROMIA/SAFIRI) — Plateforme relationnelle
 
-Next.js 15 · FastAPI · PostgreSQL · WebSockets · 10 locales
+| Aspect | Détail |
+|--------|--------|
+| **Frontend** | Next.js 15, TypeScript, Tailwind, next-intl (10 locales) |
+| **Backend** | FastAPI, PostgreSQL, Alembic, WebSockets |
+| **Fonctionnalités** | Discover, chat, channels, wallet, premium, Sarielle |
 
 ```bash
 git clone https://github.com/AFROMIA/SAFIRI.git
@@ -37,7 +47,11 @@ cd SAFIRI && cp .env.example .env && make bootstrap && make dev
 
 ### [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) — Moteur IA
 
-Scoring, personnalité, Sarielle v2, [contrat API v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
+| Aspect | Détail |
+|--------|--------|
+| **Stack** | FastAPI, HuggingFace, routeur LLM cloud/local |
+| **v2** | UserProfileIA, coaching, RAG — [CONTRACT_V2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) |
+| **Sarielle** | Agent multilingue, debug panel IaLab |
 
 ```bash
 git clone https://github.com/AFROMIA/AFFINIORA.git
@@ -50,44 +64,43 @@ cd AFFINIORA && cp .env.example .env && make dev
 
 ## Fonctionnalités récentes
 
-| Feature | Doc module |
-|---------|------------|
-| Contrat IA v2 / UserProfileIA | [AFFINIORA CONTRACT_V2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) · [Module 05](https://github.com/AFROMIA/.github/blob/main/docs/modules/05-affiniora.md) |
+| Feature | Doc |
+|---------|-----|
+| Contrat IA v2 | [Module 05](https://github.com/AFROMIA/.github/blob/main/docs/modules/05-affiniora.md) |
 | Channels créateur | [Module 19](https://github.com/AFROMIA/.github/blob/main/docs/modules/19-channels-createur.md) |
-| Wallet Safir & Campay | [Module 20](https://github.com/AFROMIA/.github/blob/main/docs/modules/20-wallet-safir.md) |
-| Badges & intentions i18n | [Module 21](https://github.com/AFROMIA/.github/blob/main/docs/modules/21-badges-intentions.md) |
-| Speed dating live | [Module 22](https://github.com/AFROMIA/.github/blob/main/docs/modules/22-speed-dating.md) |
-| Premium checkout | [Module 09](https://github.com/AFROMIA/.github/blob/main/docs/modules/09-premium-paiements.md) |
+| Wallet Safir | [Module 20](https://github.com/AFROMIA/.github/blob/main/docs/modules/20-wallet-safir.md) |
+| Badges & intentions | [Module 21](https://github.com/AFROMIA/.github/blob/main/docs/modules/21-badges-intentions.md) |
+| Speed dating | [Module 22](https://github.com/AFROMIA/.github/blob/main/docs/modules/22-speed-dating.md) |
 
 ---
 
-## Dev local (orchestration)
+## Écosystème
 
-Ce dépôt [`.github`](https://github.com/AFROMIA/.github) contient docs et scripts pour lancer **SAFIRI + AFFINIORA** côte à côte :
-
-```powershell
-git clone https://github.com/AFROMIA/SAFIRI.git
-git clone https://github.com/AFROMIA/AFFINIORA.git
-# + scripts depuis ce dépôt : docs/scripts/bootstrap.ps1
+```
+┌─────────────────────────────────────────────────────────┐
+│                      AFROMIA                            │
+│   ┌──────────────┐    ┌──────────────┐                 │
+│   │    SAFIRI    │───▶│  AFFINIORA   │                 │
+│   └──────┬───────┘    └──────┬───────┘                 │
+│          └─────────┬─────────┘                          │
+│                    ▼                                    │
+│            ┌──────────────┐                             │
+│            │   Sarielle   │                             │
+│            └──────────────┘                             │
+└─────────────────────────────────────────────────────────┘
 ```
 
-| Commande | Description |
-|----------|-------------|
-| [start.md](https://github.com/AFROMIA/.github/blob/main/start.md) | Guide démarrage complet |
-| `make dev-split` | 4 terminaux (backend, frontend, affiniora, celery) |
-| [docs/scripts/](https://github.com/AFROMIA/.github/tree/main/docs/scripts) | Bootstrap, env, celery, affiniora |
-
 ---
 
-## Stack
+## Dev local
 
-TypeScript · Python 3.12+ · Next.js · FastAPI · HuggingFace · Docker · LiveKit · pgvector
+Docs & scripts : dépôt [`.github`](https://github.com/AFROMIA/.github) — [start.md](https://github.com/AFROMIA/.github/blob/main/start.md), [docs/scripts/](https://github.com/AFROMIA/.github/tree/main/docs/scripts)
 
 ---
 
 ## Contribuer
 
-1. Consulter [l'état d'avancement](https://github.com/AFROMIA/.github/blob/main/docs/ETAT_AVANCEMENT.md) et choisir un module
+1. Consulter [l'état d'avancement](https://github.com/AFROMIA/.github/blob/main/docs/ETAT_AVANCEMENT.md)
 2. Fork [SAFIRI](https://github.com/AFROMIA/SAFIRI) ou [AFFINIORA](https://github.com/AFROMIA/AFFINIORA)
 3. PR avec référence au module concerné
 
