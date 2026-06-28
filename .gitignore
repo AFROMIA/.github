@@ -1,0 +1,72 @@
+# Dépôts applicatifs (Git indépendants — ne pas versionner ici)
+SAFIRI/
+AFFINIORA/
+
+# Dependencies (ne pas versionner à la racine — voir SAFIRI/)
+node_modules/
+.pnp
+.pnp.js
+.turbo/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Environment (chaque dépôt a son propre .env)
+.env
+.env.local
+.env.*.local
+*.pem
+
+# IDE / outils locaux
+.cursor/
+.vscode/
+*.swp
+*.swo
+
+# Next.js (SAFIRI)
+.next/
+out/
+
+# Docker / logs
+*.log
+logs/
+SAFIRI/docker-compose.postgres-override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI Models cache (AFFINIORA)
+AFFINIORA/models/cache/
+AFFINIORA/services/ai-engine/models/cache/
+*.bin
+*.safetensors
+
+# Terraform (docs/infra)
+docs/infra/terraform/**/.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Test
+playwright-report/
+test-results/
+coverage/
+
+# Misc
+*.local
