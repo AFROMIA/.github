@@ -71,12 +71,20 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
+  count  = var.enable_nat_gateway ? 1 : 0
   domain = "vpc"
 }
 
 resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat.id
+  count         = var.enable_nat_gateway ? 1 : 0
+  allocation_id = aws_eip.nat[0].id
   subnet_id     = aws_subnet.public[0].id
+}
+
+variable "enable_nat_gateway" {
+  type        = bool
+  default     = false
+  description = "NAT Gateway (~32 EUR/mois). Desactive en staging : ECS en subnet public."
 }
 
 # RDS PostgreSQL
@@ -89,8 +97,8 @@ resource "aws_db_instance" "postgres" {
   identifier             = local.name
   engine                 = "postgres"
   engine_version         = "16"
-  instance_class         = var.environment == "production" ? "db.r6g.large" : "db.t3.medium"
-  allocated_storage      = 50
+  instance_class         = var.environment == "production" ? "db.r6g.large" : "db.t4g.micro"
+  allocated_storage      = 20
   storage_encrypted      = true
   db_name                = "afromia"
   username               = "afromia"

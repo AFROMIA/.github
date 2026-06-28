@@ -1,38 +1,47 @@
 # Module 09 — Premium & paiements
 
-**Statut** : 🔴 Non opérationnel (config manquante)  
+**Statut** : 🟡 Partiel (checkout codé, clés staging absentes)  
 **Spec** : PREM-01 à PREM-08
 
 ---
 
 ## Vision
 
-Monétisation via abonnements Stripe/PayPal : likes illimités, likes reçus, visiteurs profil, boost. Quota free avec reset quotidien.
+Monétisation via abonnements Stripe, wallet Safir et Campay (mobile money) : likes illimités, coaching IA premium, boost, offerings channels.
 
-## État réel
+## État réel (juin 2026)
 
 | Composant | État |
 |-----------|------|
-| API Stripe / PayPal | ✅ (code) |
+| API Stripe / webhooks | ✅ |
+| Client Campay | ✅ (code) |
+| Page `/premium` | ✅ |
+| Page `/premium/checkout` | ✅ (nouveau) |
+| Page `/premium/success` | 🟡 |
 | Clés API configurées | ❌ |
-| Page `/premium` | 🟡 |
-| Page `/premium/success` | ❌ (404) |
-| Webhooks | 🟡 (non testés) |
 | Quota likes free | 🟡 |
 
-## Bloqueurs
+## Solution proposée
 
-- `STRIPE_SECRET_KEY`, `PAYPAL_*` vides dans `.env`
-- Route success absente → parcours checkout incomplet
+1. Configurer Stripe test mode (`STRIPE_SECRET_KEY`, webhook secret)
+2. Campay sandbox pour rechargement Safir ([module 20](./20-wallet-safir.md))
+3. E2E : checkout → webhook → rôle premium actif
+4. Page success avec redirection profil
+
+## Compétences requises
+
+- Stripe Checkout / webhooks, idempotence
+- Campay API (mobile money Afrique)
+- FastAPI middleware sécurité webhooks
+- Next.js pages paiement, gestion erreurs UX
 
 ## Recette
 
-- Scénario R-P2-01 (Stripe test mode) — voir [RECETTE.md](../RECETTE.md)
-- Aucun test automatisé
+- Scénario R-P2-01 — voir [RECETTE.md](../RECETTE.md)
+- Tests manuels checkout staging requis
 
 ## Actions prioritaires
 
-1. Configurer Stripe staging (clés test)
-2. Créer `/premium/success`
-3. Valider webhook → statut premium actif
-4. E2E checkout test mode
+1. Clés Stripe staging dans `.env`
+2. Valider webhook → `user.is_premium`
+3. Lier premium → `ia_gating` (cloud LLM Sarielle)

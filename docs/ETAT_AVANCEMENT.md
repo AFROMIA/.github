@@ -1,10 +1,12 @@
 # AFROMIA / SAFIRI — État d'avancement réel
 
-**Version** : 2.1  
+**Version** : 2.2  
 **Date** : 28 juin 2026  
 **Statut** : Document de vérité technique — à mettre à jour à chaque sprint  
 
 **Documents liés** : [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
+
+**Dépôts applicatifs** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
 
 ---
 
@@ -13,29 +15,30 @@
 1. [Synthèse exécutive](#1-synthèse-exécutive)
 2. [Légende des statuts](#2-légende-des-statuts)
 3. [Matrice globale](#3-matrice-globale)
-4. [Bloqueurs transverses](#4-bloqueurs-transverses)
-5. [Détail par module](#5-détail-par-module)
-6. [Infrastructure & dépendances](#6-infrastructure--dépendances)
-7. [Prochaines priorités recommandées](#7-prochaines-priorités-recommandées)
+4. [Fonctionnalités récentes — état, solutions, compétences](#4-fonctionnalités-récentes--état-solutions-compétences)
+5. [Bloqueurs transverses](#5-bloqueurs-transverses)
+6. [Détail par module historique](#6-détail-par-module-historique)
+7. [Infrastructure & dépendances](#7-infrastructure--dépendances)
+8. [Prochaines priorités recommandées](#8-prochaines-priorités-recommandées)
 
 ---
 
 ## 1. Synthèse exécutive
 
-> **Constat honnête (juin 2026)** : le dépôt contient une base de code **vaste et structurée** (~30 routes frontend, ~20 modules API backend, microservice AFFINIORA séparé). En revanche, **peu de parcours sont opérationnels de bout en bout sans configuration manuelle** de l'infrastructure et des secrets. L'impression « rien ne fonctionne » est compréhensible si l'on attend un produit prêt à l'emploi après `make dev` seul.
+> **Constat honnête (juin 2026)** : la base de code est **large et structurée** (35+ routes frontend, 30+ modules API backend, microservice AFFINIORA séparé, 10 migrations récentes). Le sprint juin a livré **channels créateur, wallet Safir, badges, intentions i18n, speed dating et contrat IA v2** — mais **peu de parcours sont validés bout-en-bout** sans lancer manuellement AFFINIORA, Celery et configurer les secrets tiers.
 
 | Indicateur | Valeur estimée | Commentaire |
 |------------|----------------|-------------|
-| Code backend (modules API) | ~85 % écrit | Peu testé en intégration |
-| Code frontend (pages/composants) | ~80 % écrit | Plusieurs routes manquantes ou cassées |
-| Intégration AFFINIORA | ~50 % opérationnelle | Dépend service Docker séparé + Celery |
-| Services tiers configurés | ~10 % | Stripe, SMTP, OAuth, VAPID vides |
-| Tests automatisés | ~25 % couverture utile | 37+ tests backend + nouveaux tests AFFINIORA profile IA + 3 E2E smoke |
-| Recette manuelle validée | ~20 % | Aucun sign-off staging |
+| Code backend (modules API) | ~90 % écrit | Channels, wallet, IA v2 ajoutés ; intégration peu testée |
+| Code frontend (pages/composants) | ~85 % écrit | Nouvelles pages channels/wallet/speed-dating ; quelques routes legacy |
+| Intégration AFFINIORA v2 | ~60 % opérationnelle | Contrat UserProfileIA codé ; dépend Docker + Celery + clés cloud premium |
+| Services tiers configurés | ~15 % | Stripe/Campay codés ; clés staging absentes |
+| Tests automatisés | ~25 % couverture utile | +tests profile IA, résilience DB/Redis ; E2E smoke limités |
+| Recette manuelle validée | ~25 % | Channels et wallet non sign-off |
 
-**Ce qui marche le mieux** : design system, navigation, landing i18n (fallback), admin shell (compte staff seed).
+**Ce qui marche le mieux** : design system, navigation, admin shell, debug panel IA Lab, fixtures enrichies, orchestration `make dev-split`.
 
-**Ce qui bloque le plus** : vérification email sans SMTP, AFFINIORA/Celery absents du dev local standard, paiements non configurés, CMS sans contenu seedé, blog détail manquant.
+**Ce qui bloque le plus** : secrets tiers vides, Celery non lancé par défaut, recette channels/paiements absente, push notifications inactives.
 
 ---
 
@@ -43,11 +46,11 @@
 
 | Statut | Signification |
 |--------|---------------|
-| ✅ **Opérationnel** | Fonctionne en local avec la stack standard (`make dev`) et données seed |
-| 🟡 **Partiel** | Code présent mais dépend config externe, service manquant ou UX incomplète |
-| 🚧 **En cours** | Développement ou recette active ; bugs connus non résolus |
-| 🔴 **Non implémenté** | Absent ou placeholder uniquement |
-| ❌ **Cassé** | Code présent mais ne fonctionne pas en l'état |
+| ✅ **Opérationnel** | Fonctionne en local avec stack standard + seed |
+| 🟡 **Partiel** | Code présent ; dépend config externe, service manquant ou UX incomplète |
+| 🚧 **En cours** | Développement ou recette active ; bugs connus |
+| 🔴 **Non opérationnel** | Config manquante ou parcours non testable |
+| ❌ **Cassé** | Code présent mais dysfonctionnel en l'état |
 
 ---
 
@@ -55,105 +58,124 @@
 
 | Module | Backend | Frontend | BtB local | Statut | Fiche |
 |--------|---------|----------|-----------|--------|-------|
-| Homepage & CMS | ✅ | ✅ | 🟡 | 🟡 | [modules/01-homepage-cms.md](./modules/01-homepage-cms.md) |
-| Auth & wizard | ✅ | ✅ | 🟡 | 🟡 | [modules/02-auth-wizard.md](./modules/02-auth-wizard.md) |
-| Sarielle (agent) | ✅ | ✅ | 🟡 | 🟡 | [modules/03-sarielle.md](./modules/03-sarielle.md) |
-| Profils & onboarding | ✅ | ✅ | 🟡 | 🟡 | [modules/04-profils-onboarding.md](./modules/04-profils-onboarding.md) |
-| AFFINIORA (IA) | ✅ | ✅ | 🟡 | 🟡 | [modules/05-affiniora.md](./modules/05-affiniora.md) |
-| Vérification & confiance | ✅ | ✅ | ❌ | 🟡 | [modules/06-verification-confiance.md](./modules/06-verification-confiance.md) |
-| Discover & matching | ✅ | ✅ | 🟡 | 🟡 | [modules/07-discover-matching.md](./modules/07-discover-matching.md) |
-| Chat & messagerie | ✅ | ✅ | 🟡 | 🚧 | [modules/08-chat-messagerie.md](./modules/08-chat-messagerie.md) |
-| Premium & paiements | ✅ | 🟡 | 🟡 | 🟡 | [modules/09-premium-paiements.md](./modules/09-premium-paiements.md) |
-| Live streaming | ✅ | ✅ | 🟡 | 🟡 | [modules/10-live-streaming.md](./modules/10-live-streaming.md) |
-| Boutique cadeaux | ✅ | ✅ | 🟡 | 🟡 | [modules/11-boutique-cadeaux.md](./modules/11-boutique-cadeaux.md) |
-| Appels WebRTC | ✅ | ✅ | 🟡 | 🟡 | [modules/12-webrtc-appels.md](./modules/12-webrtc-appels.md) |
-| CMS & blog | ✅ | 🟡 | 🟡 | 🟡 | [modules/13-cms-blog.md](./modules/13-cms-blog.md) |
-| Notifications | ✅ | ✅ | ❌ | 🔴 | [modules/14-notifications.md](./modules/14-notifications.md) |
-| Admin & modération | ✅ | ✅ | 🟡 | 🟡 | [modules/15-admin-moderation.md](./modules/15-admin-moderation.md) |
-| RGPD | ✅ | ✅ | 🟡 | 🟡 | [modules/16-rgpd.md](./modules/16-rgpd.md) |
-| Design & UX | — | ✅ | ✅ | ✅ | [modules/17-design-ui-ux.md](./modules/17-design-ui-ux.md) |
-| Infra & DevOps | ✅ | — | 🟡 | 🚧 | [modules/18-infra-devops.md](./modules/18-infra-devops.md) |
+| Homepage & CMS | ✅ | ✅ | 🟡 | 🟡 | [01](./modules/01-homepage-cms.md) |
+| Auth & wizard | ✅ | ✅ | 🟡 | 🟡 | [02](./modules/02-auth-wizard.md) |
+| Sarielle | ✅ | ✅ | 🟡 | 🟡 | [03](./modules/03-sarielle.md) |
+| Profils & onboarding | ✅ | ✅ | 🟡 | 🟡 | [04](./modules/04-profils-onboarding.md) |
+| AFFINIORA (IA v2) | ✅ | ✅ | 🟡 | 🟡 | [05](./modules/05-affiniora.md) |
+| Vérification & confiance | ✅ | ✅ | ❌ | 🟡 | [06](./modules/06-verification-confiance.md) |
+| Discover & matching | ✅ | ✅ | 🟡 | 🟡 | [07](./modules/07-discover-matching.md) |
+| Chat & messagerie | ✅ | ✅ | 🟡 | 🚧 | [08](./modules/08-chat-messagerie.md) |
+| Premium & paiements | ✅ | 🟡 | 🟡 | 🟡 | [09](./modules/09-premium-paiements.md) |
+| Live streaming | ✅ | ✅ | 🟡 | 🟡 | [10](./modules/10-live-streaming.md) |
+| Boutique cadeaux | ✅ | ✅ | 🟡 | 🟡 | [11](./modules/11-boutique-cadeaux.md) |
+| Appels WebRTC | ✅ | ✅ | 🟡 | 🟡 | [12](./modules/12-webrtc-appels.md) |
+| CMS & blog | ✅ | 🟡 | 🟡 | 🟡 | [13](./modules/13-cms-blog.md) |
+| Notifications | ✅ | ✅ | ❌ | 🔴 | [14](./modules/14-notifications.md) |
+| Admin & modération | ✅ | ✅ | 🟡 | 🟡 | [15](./modules/15-admin-moderation.md) |
+| RGPD | ✅ | ✅ | 🟡 | 🟡 | [16](./modules/16-rgpd.md) |
+| Design & UX | — | ✅ | ✅ | ✅ | [17](./modules/17-design-ui-ux.md) |
+| Infra & DevOps | ✅ | — | 🟡 | 🚧 | [18](./modules/18-infra-devops.md) |
+| **Channels créateur** | ✅ | ✅ | 🟡 | 🟡 | [19](./modules/19-channels-createur.md) |
+| **Wallet Safir** | ✅ | ✅ | 🟡 | 🟡 | [20](./modules/20-wallet-safir.md) |
+| **Badges & intentions** | ✅ | ✅ | 🟡 | 🟡 | [21](./modules/21-badges-intentions.md) |
+| **Speed dating** | ✅ | ✅ | 🟡 | 🚧 | [22](./modules/22-speed-dating.md) |
 
-*BtB = bout-en-bout (parcours utilisateur complet testable)*
-
----
-
-## 4. Bloqueurs transverses
-
-| # | Bloqueur | Impact | Modules touchés | Mitigation |
-|---|----------|--------|-----------------|------------|
-| B1 | **AFFINIORA hors compose SAFIRI** | Scores fake (65 %), Sarielle offline, vérif async HS | 03, 05, 06, 07 | Lancer AFFINIORA via `docs/scripts/dev.ps1` ; documenter |
-| B2 | **Celery absent en `dev:local`** | Vérif vidéo, push, scoring async, modération async | 05, 06, 14 | Terminal dédié worker Celery (voir README) |
-| B3 | **SMTP vide** | Email non vérifié → gate Discover bloqué | 02, 07 | `email_dev_mode` + lien loggé ; ou comptes staff seed |
-| B4 | **Secrets tiers vides** | OAuth, Stripe, PayPal, VAPID, Giphy inactifs | 02, 09, 14 | Sprint config S6 |
-| B5 | **Deux parcours onboarding** | `/onboarding` vs `/getting-started` — confusion | 02, 04 | Unifier ou documenter clairement |
-| B6 | **CMS sans seed** | Homepage = fallback i18n uniquement | 01, 13 | Publier contenu admin ou seed CMS |
-| B7 | **Routes frontend manquantes** | `/blog/[slug]`, `/premium/success` | 09, 13 | Créer pages manquantes |
-| B8 | **Tests insuffisants** | Régressions non détectées | Tous | Voir [RECETTE.md](./RECETTE.md) |
+*BtB = bout-en-bout testable en local avec seed*
 
 ---
 
-## 5. Détail par module
+## 4. Fonctionnalités récentes — état, solutions, compétences
 
-Chaque module dispose d'une fiche détaillée dans `docs/modules/`. Résumé des constats critiques :
+Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 
-### Homepage & CMS (🟡)
-- API CMS homepage + revalidation Next.js implémentées.
-- **Problème** : pas de contenu CMS au seed ; modifications admin parfois non visibles sans revalidation (corrigé partiellement).
-- **Manque** : formulaires contact/newsletter à valider bout-en-bout.
+| Fonctionnalité | État réel | Solution proposée | Compétences requises |
+|----------------|-----------|-------------------|----------------------|
+| **Contrat IA v2 (UserProfileIA)** | Schémas SAFIRI + AFFINIORA alignés ; endpoints `profile-full`, coaching, Sarielle jobs codés. Recette partielle. | 1) Documenter flux dans [CONTRACT_V2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) 2) Test E2E `POST /profiles/me/analyze` 3) Vérifier persistance `analysis_report` | Python FastAPI, Pydantic, TypeScript shared-types, compréhension RAG |
+| **Analyse profil + coaching premium** | Moteur `profile_analysis_engine`, gating `ia_gating.py`, wizard profil frontend. Premium cloud LLM inactif sans clés. | 1) Clés OpenAI/Anthropic staging 2) Recette free vs premium 3) Fallback UX « IA indisponible » | ML/NLP (HuggingFace), FastAPI, Next.js, pgvector |
+| **Sarielle v2 + routeur LLM** | Routeur cloud/local opérationnel côté AFFINIORA ; debug panel IaLab appelle directement le service. | 1) `make dev-split` systématique 2) Tests charge Sarielle 3) Monitoring latence cloud vs local | LLM ops, FastAPI, CORS, Celery |
+| **Channels créateur** | API complète (CRUD, abonnements, engagement, inquiries) ; UI `/channels`, studio créateur, admin monitor. Non recetté bout-en-bout. | 1) Seed `channel_seed` + parcours créateur 2) Tests Playwright checkout offering 3) Modération contenu | FastAPI, SQLAlchemy, Next.js App Router, Stripe (offerings) |
+| **Wallet Safir** | Monnaie interne, API wallet/currency, UI `/wallet`, client Campay codé. Aucune clé Campay configurée. | 1) Compte Campay sandbox 2) Recette crédit/débit/tip 3) Réconciliation ledger DB | Paiements mobile money (Afrique), FastAPI transactions, idempotence webhooks |
+| **Premium checkout** | Pages `/premium/checkout`, webhooks Stripe codés. Clés Stripe vides ; `/premium/success` partiel. | 1) Stripe test mode 2) E2E checkout → rôle premium 3) Page confirmation | Stripe API, webhooks sécurisés, Next.js |
+| **Badges** | Catalogue domaine, sync service, admin panel, composants UI. Attribution auto peu testée. | 1) Règles métier documentées 2) Tests `badge_service` 3) Affichage profil public | Domain-driven design, règles métier, React |
+| **Intentions i18n** | Catalogue + sondes + 10 locales ; `IntentionProbeModal`. Traductions partiellement validées par locuteurs natifs. | 1) Revue linguistique FR/EN/AR 2) Script `merge-i18n-extensions.mjs` en CI 3) Tests pagination intentions | next-intl, i18n, UX research |
+| **Speed dating** | Orchestrateur + WS + LiveKit helpers ; room UI basique. LiveKit local requis, non documenté au onboarding. | 1) Guide LiveKit dans [start.md](../start.md) 2) Test session 2 utilisateurs seed 3) Gestion timeouts | WebSocket, LiveKit, orchestration temps réel |
+| **Résilience DB/Redis** | Couche `resilience.py` + client Redis dédié ; tests unitaires. Pas de chaos testing. | 1) Simuler panne Redis en dev 2) Circuit breaker dashboard 3) Alertes Prometheus | SRE, PostgreSQL, Redis, pytest |
+| **Debug panel IA Lab** | Appels directs navigateur → AFFINIORA (CORS + admin key). Fonctionnel si AFFINIORA up. | 1) Documenter variables `NEXT_PUBLIC_AFFINIORA_*` 2) Masquer en production 3) Fixtures knowledge | Next.js, sécurité API keys, DX |
 
-### Auth & wizard (🟡)
-- Register, login, OAuth (code complet), wizard Getting Started, gate email vérifié.
-- **Bug signalé** : inscription wizard connecte trop tôt et saute étapes.
-- **Demande utilisateur** : bloquer Discover sans email vérifié — partiellement implémenté (`EmailVerificationGate`).
+---
 
-### Sarielle (🟡)
-- Page `/sarielle`, hub flottant, proxy AFFINIORA, jobs async.
-- **HS si** AFFINIORA down → mode template/offline.
+## 5. Bloqueurs transverses
+
+| # | Bloqueur | Impact | Modules | Mitigation |
+|---|----------|--------|---------|------------|
+| B1 | **AFFINIORA + Celery non auto-lancés** | IA, Sarielle, analyse async HS | 03, 05, 19 | `make dev-split` documenté ; [start.md](../start.md) |
+| B2 | **Secrets tiers vides** | Paiements, OAuth, push, Campay | 09, 14, 20 | Sprint config ; templates [env-profiles](./env-profiles/) |
+| B3 | **SMTP vide** | Gate email Discover bloqué | 02, 07 | `email_dev_mode` ou comptes seed staff |
+| B4 | **Recette nouvelles features absente** | Channels, wallet, speed dating non validés | 19–22 | Scénarios dans [RECETTE.md](./RECETTE.md) à étendre |
+| B5 | **Tests E2E insuffisants** | Régressions non détectées | Tous | Playwright parcours MVP + channels |
+| B6 | **CMS sans seed** | Homepage fallback i18n seul | 01, 13 | Publier contenu admin |
+| B7 | **Chat optimiste fragile** | Refresh nécessaire parfois | 08 | Fix P0 WebSocket ack |
+
+---
+
+## 6. Détail par module historique
+
+Résumé des modules 01–18. Voir fiches détaillées dans [modules/](./modules/).
+
+### Premium & paiements (🟡 — amélioration juin 2026)
+- Checkout Stripe + Campay **codés** ; clés API **absentes**.
+- Page `/premium/checkout` ajoutée ; webhooks à valider en staging.
+
+### AFFINIORA (🟡 — contrat v2)
+- Fallback score 65 encore possible si service down.
+- Debug panel permet de tester sans passer par SAFIRI backend.
 
 ### Chat (🚧)
-- WebSocket + REST + typing + suggestions IA.
-- **Bugs signalés** : message pas visible immédiatement ; refresh nécessaire.
-
-### Premium (🔴)
-- Code Stripe/PayPal présent ; **aucune clé configurée** ; page `/premium/success` absente.
+- WebSocket + typing + suggestions IA.
+- Bugs signalés : visibilité message immédiate.
 
 ### Notifications (🔴)
-- Backend + WS + Celery ; VAPID vide ; push non fonctionnel.
+- VAPID vide ; push non fonctionnel.
 
 ---
 
-## 6. Infrastructure & dépendances
+## 7. Infrastructure & dépendances
 
-### Stack minimale pour un parcours utilisateur
+### Stack minimale (parcours complet)
 
 ```
-make bootstrap → make dev
+make bootstrap → make dev-split
   ├── Docker : Postgres, Redis, MinIO (SAFIRI)
-  ├── Docker : AFFINIORA ai-engine :8001 (via dev.ps1)
-  ├── Migrations + seed
+  ├── Docker : AFFINIORA ai-engine :8001
+  ├── Migrations (012–021) + seed
   ├── Backend :8000 + Frontend :3000
-  └── [MANUEL] Celery worker (recommandé)
+  ├── Terminal Affiniora (si pas compose unifié)
+  └── Celery worker (recommandé)
 ```
 
-### Comptes de test
+### Scripts & docs
 
-Voir [COMPTES_TEST.md](./COMPTES_TEST.md). Mot de passe fixtures : `FixturePass123!` (admin : `AdminPassword123!`).
-
----
-
-## 7. Prochaines priorités recommandées
-
-Ordre suggéré pour rendre le produit **utilisable module par module** :
-
-1. **Infra** — `make dev` fiable + Celery documenté/lancé automatiquement
-2. **Auth** — corriger wizard (pas de connexion prématurée) ; SMTP dev ou bypass recette
-3. **AFFINIORA** — garantir service up ; supprimer scores factices visibles
-4. **Discover → Match → Chat** — parcours cœur stable (bugs chat P0)
-5. **Homepage CMS** — seed contenu + formulaires fonctionnels
-6. **Premium** — Stripe staging + page success
-7. **Recette** — E2E parcours complet (voir RECETTE.md)
+| Ressource | Lien |
+|-----------|------|
+| Démarrage rapide | [start.md](../start.md) |
+| Guide développeur | [docs/README.md](./README.md) |
+| Scripts orchestration | [docs/scripts/](./scripts/) |
+| Déploiement AWS | [infra/AWS_DEPLOYMENT.md](./infra/AWS_DEPLOYMENT.md) |
+| Comptes test | [COMPTES_TEST.md](./COMPTES_TEST.md) |
 
 ---
 
-*Document maintenu par l'équipe AFROMIA. Mettre à jour après chaque session de recette ou sprint.*
+## 8. Prochaines priorités recommandées
+
+1. **Config staging** — Stripe test + Campay sandbox + clés AFFINIORA cloud
+2. **Recette channels** — parcours créateur → offering → checkout
+3. **Recette wallet** — crédit Safir, tip, conversion devise
+4. **AFFINIORA fiable** — `make dev-split` par défaut ; scores réels Discover
+5. **Chat P0** — fix message optimiste
+6. **Speed dating** — session LiveKit 2 users documentée
+7. **E2E Playwright** — étendre au-delà du smoke MVP
+
+---
+
+*Document maintenu par l'équipe AFROMIA. Dépôt informationnel : [github.com/AFROMIA/.github](https://github.com/AFROMIA/.github).*

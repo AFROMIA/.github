@@ -293,15 +293,15 @@ Voir le guide détaillé : [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 
 | Document | Contenu |
 |----------|---------|
-| [VISION.md](./VISION.md) | Mission, naming (SAFIRI/AFFINIORA/Sarielle), piliers — **v2.0** |
-| [SPECIFICATION_FONCTIONNELLE.md](./SPECIFICATION_FONCTIONNELLE.md) | Spec détaillée 16 modules, IDs fonctionnels — **v2.0** |
-| [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md) | Statuts réels (✅ 🟡 🚧 🔴), blocages, priorités |
-| [RECETTE.md](./RECETTE.md) | Plan de recette, scénarios, couverture tests (~62 auto) |
-| [modules/README.md](./modules/README.md) | **18 fiches module** — travailler aspect par aspect |
-| [PLANNING_MVP.md](./PLANNING_MVP.md) | Sprints, jalons, checklist go-live |
+| [**État d'avancement**](./ETAT_AVANCEMENT.md) | Statuts réels, solutions, compétences par feature — **v2.2** |
+| [Fiches modules](./modules/README.md) | 22 modules dont channels, wallet, badges, speed dating |
+| [VISION.md](./VISION.md) | Mission, naming (SAFIRI/AFFINIORA/Sarielle) |
+| [SPECIFICATION_FONCTIONNELLE.md](./SPECIFICATION_FONCTIONNELLE.md) | Spec détaillée 16+ modules |
+| [RECETTE.md](./RECETTE.md) | Plan de recette, scénarios |
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Architecture écosystème |
-| [SAFIRI](../SAFIRI/docs/ARCHITECTURE.md) | Architecture app |
-| [AFFINIORA](../AFFINIORA/docs/ARCHITECTURE.md) | Architecture IA |
+| [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) | UserProfileIA (dépôt AFFINIORI) |
+| [SAFIRI](https://github.com/AFROMIA/SAFIRI/blob/main/docs/ARCHITECTURE.md) | Architecture app |
+| [AFFINIORA](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/ARCHITECTURE.md) | Architecture IA |
 | [Design system](./ux/design.md) | Charte UX |
 | [Comptes de test](./COMPTES_TEST.md) | Fixtures et rôles |
 | [env-profiles/](./env-profiles/) | Templates `.env` |

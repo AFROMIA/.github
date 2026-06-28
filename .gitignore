@@ -70,3 +70,12 @@ coverage/
 
 # Misc
 *.local
+*.csv
+*_credentials.csv
+afromia-dev-agent_credentials.csv
+scripts/init-*.ps1
+*.csv
+*_credentials.csv
+afromia-dev-agent_credentials.csv
+_remote-github-tmp/
+scripts/init-*.ps1

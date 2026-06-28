@@ -2,8 +2,8 @@ locals {
   services = {
     safiri-backend = {
       port          = 8000
-      cpu           = 1024
-      memory        = 2048
+      cpu           = 512
+      memory        = 1024
       desired_count = 1
       target_group  = aws_lb_target_group.backend.arn
       image         = "safiri-backend"
@@ -11,8 +11,8 @@ locals {
     }
     safiri-frontend = {
       port          = 3000
-      cpu           = 512
-      memory        = 1024
+      cpu           = 256
+      memory        = 512
       desired_count = 1
       target_group  = aws_lb_target_group.frontend.arn
       image         = "safiri-frontend"
@@ -20,12 +20,13 @@ locals {
     }
     safiri-celery-worker = {
       port          = 0
-      cpu           = 1024
-      memory        = 2048
+      cpu           = 512
+      memory        = 1024
       desired_count = 1
       target_group  = null
       image         = "safiri-backend"
       command       = ["celery", "-A", "app.workers.celery_app", "worker", "--loglevel=info"]
+      capacity_provider = "FARGATE_SPOT"
     }
     safiri-celery-beat = {
       port          = 0
@@ -35,11 +36,12 @@ locals {
       target_group  = null
       image         = "safiri-backend"
       command       = ["celery", "-A", "app.workers.celery_app", "beat", "--loglevel=info"]
+      capacity_provider = "FARGATE_SPOT"
     }
     affiniora-ai-engine = {
       port          = 8001
-      cpu           = 2048
-      memory        = 8192
+      cpu           = 1024
+      memory        = 4096
       desired_count = 1
       target_group  = null
       image         = "affiniora-ai-engine"
@@ -122,12 +124,20 @@ resource "aws_ecs_service" "services" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.services[each.key].arn
   desired_count   = each.value.desired_count
-  launch_type     = "FARGATE"
+  launch_type     = lookup(each.value, "capacity_provider", null) == null ? "FARGATE" : null
 
   network_configuration {
-    subnets          = aws_subnet.private[*].id
+    subnets          = var.enable_nat_gateway ? aws_subnet.private[*].id : aws_subnet.public[*].id
     security_groups  = [aws_security_group.ecs.id]
-    assign_public_ip = false
+    assign_public_ip = !var.enable_nat_gateway
+  }
+
+  dynamic "capacity_provider_strategy" {
+    for_each = lookup(each.value, "capacity_provider", null) != null ? [1] : []
+    content {
+      capacity_provider = each.value.capacity_provider
+      weight            = 100
+    }
   }
 
   dynamic "load_balancer" {
