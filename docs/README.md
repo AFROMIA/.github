@@ -299,7 +299,7 @@ Voir le guide détaillé : [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 | [SPECIFICATION_FONCTIONNELLE.md](./SPECIFICATION_FONCTIONNELLE.md) | Spec détaillée 16+ modules |
 | [RECETTE.md](./RECETTE.md) | Plan de recette, scénarios |
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Architecture écosystème |
-| [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) | UserProfileIA (dépôt AFFINIORI) |
+| [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) | UserProfileIA (dépôt AFFINIORA) |
 | [SAFIRI](https://github.com/AFROMIA/SAFIRI/blob/main/docs/ARCHITECTURE.md) | Architecture app |
 | [AFFINIORA](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/ARCHITECTURE.md) | Architecture IA |
 | [Design system](./ux/design.md) | Charte UX |
