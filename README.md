@@ -88,6 +88,7 @@ Liste complète : [docs/COMPTES_TEST.md](./docs/COMPTES_TEST.md) — seed via `m
 - [Guide développeur local](./docs/README.md) · [Démarrage rapide](./start.md)
 - [Comptes de test et fixtures](./docs/COMPTES_TEST.md)
 - [Architecture écosystème](./docs/ARCHITECTURE.md)
+- [Déploiement AWS](./docs/infra/AWS_DEPLOYMENT.md) · [Pipeline DevOps](./docs/infra/DEVOPS_PIPELINE.md)
 - [État d'avancement](./docs/ETAT_AVANCEMENT.md)
 - [Contrat API v2 AFFINIORA](./AFFINIORA/docs/CONTRACT_V2.md)
 - [Design system & UX romantique](./docs/ux/design.md)
