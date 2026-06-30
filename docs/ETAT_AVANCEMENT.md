@@ -161,14 +161,15 @@ make bootstrap → make dev-split
 | Démarrage rapide | [start.md](../start.md) |
 | Guide développeur | [docs/README.md](./README.md) |
 | Scripts orchestration | [docs/scripts/](./scripts/) |
-| Déploiement AWS | [infra/AWS_DEPLOYMENT.md](./infra/AWS_DEPLOYMENT.md) |
+| **Déploiement AWS** | [infra/README.md](./infra/README.md) · [AWS_DEPLOYMENT](./infra/AWS_DEPLOYMENT.md) |
 | Comptes test | [COMPTES_TEST.md](./COMPTES_TEST.md) |
 
 ---
 
 ## 8. Prochaines priorités recommandées
 
-1. **Config staging** — Stripe test + Campay sandbox + clés AFFINIORA cloud
+1. **Déploiement AWS staging** — débloquer IAM, `bootstrap-aws.ps1`, premier deploy ECR/ECS
+2. **Config staging** — Stripe test + Campay sandbox + clés AFFINIORA cloud
 2. **Recette channels** — parcours créateur → offering → checkout
 3. **Recette wallet** — crédit Safir, tip, conversion devise
 4. **AFFINIORA fiable** — `make dev-split` par défaut ; scores réels Discover

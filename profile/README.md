@@ -92,9 +92,20 @@ cd AFFINIORA && cp .env.example .env && make dev
 
 ---
 
-## Dev local
+## Dev local & déploiement cloud
 
-Docs & scripts : dépôt [`.github`](https://github.com/AFROMIA/.github) — [start.md](https://github.com/AFROMIA/.github/blob/main/start.md), [docs/scripts/](https://github.com/AFROMIA/.github/tree/main/docs/scripts)
+| Ressource | Lien |
+|-----------|------|
+| Dev local | [start.md](https://github.com/AFROMIA/.github/blob/main/start.md) · [docs/scripts/](https://github.com/AFROMIA/.github/tree/main/docs/scripts) |
+| **Déploiement AWS** | [**docs/infra/**](https://github.com/AFROMIA/.github/tree/main/docs/infra) · [guide complet](https://github.com/AFROMIA/.github/blob/main/docs/infra/AWS_DEPLOYMENT.md) |
+| CI/CD | [Pipeline DevOps](https://github.com/AFROMIA/.github/blob/main/docs/infra/DEVOPS_PIPELINE.md) |
+
+```powershell
+# Staging AWS (après IAM configuré)
+cd docs/infra/scripts
+.\bootstrap-aws.ps1 -Profile afromia-dev
+.\deploy-staging.ps1 -Profile afromia-dev
+```
 
 ---
 

@@ -7,15 +7,21 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket = "afromia-terraform-state"
-    key    = "afromia/terraform.tfstate"
-    region = "eu-west-1"
-  }
+  # Backend S3: activer apres attribution policy AdministratorAccess a afromia-dev-agent
+  # backend "s3" {
+  #   bucket = "afromia-577239834825-terraform-state"
+  #   key    = "afromia/terraform.tfstate"
+  #   region = "eu-west-1"
+  # }
 }
 
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
+  profile = var.aws_profile
+}
+
+variable "aws_profile" {
+  default = "afromia-dev"
 }
 
 variable "aws_region" {

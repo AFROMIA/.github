@@ -59,6 +59,10 @@ AFFINIORA/services/ai-engine/models/cache/
 
 # Terraform (docs/infra)
 docs/infra/terraform/**/.terraform/
+docs/infra/terraform/aws/terraform.tfvars
+docs/infra/terraform/aws/tfplan
+docs/infra/terraform/aws/terraform.tfstate
+docs/infra/terraform/aws/terraform.tfstate.backup
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
@@ -72,10 +76,9 @@ coverage/
 *.local
 *.csv
 *_credentials.csv
-afromia-dev-agent_credentials.csv
-scripts/init-*.ps1
-*.csv
-*_credentials.csv
+afromia-dev-agent_accessKeys.csv
 afromia-dev-agent_credentials.csv
 _remote-github-tmp/
+*.pdf
+docs/**/*.pdf
 scripts/init-*.ps1

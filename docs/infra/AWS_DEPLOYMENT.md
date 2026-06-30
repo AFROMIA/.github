@@ -83,20 +83,36 @@ Build les images Docker, les pousse sur ECR, et redéploie les services ECS.
 
 ### Étape 6 — Secrets applicatifs
 
-Après le Terraform, renseigner les secrets dans **AWS Secrets Manager** (`afromia-staging/app-secrets`) :
+```powershell
+.\setup-secrets.ps1 -Profile afromia-dev -Environment staging
+```
+
+Génère et stocke dans **AWS Secrets Manager** (`afromia-staging/app-secrets`) :
 
 | Secret | Source |
 |--------|--------|
-| `JWT_SECRET_KEY` | `openssl rand -hex 32` |
-| `SECRET_KEY` | `openssl rand -hex 32` |
+| `JWT_SECRET_KEY` | Généré automatiquement |
+| `SECRET_KEY` | Généré automatiquement |
 | `DATABASE_URL` | Output Terraform `rds_endpoint` |
 | `REDIS_URL` | Output Terraform `redis_endpoint` |
-| `STRIPE_SECRET_KEY` | Dashboard Stripe |
+| `STRIPE_SECRET_KEY` | Dashboard Stripe (à compléter manuellement) |
 | `AFFINIORA_API_URL` | URL interne ALB → service ai-engine |
+
+### Étape 6b — Migrations base de données
+
+```powershell
+.\run-migrations.ps1 -Profile afromia-dev -Environment staging
+```
+
+Exécute `alembic upgrade head` via une tâche ECS one-shot.
 
 ### Étape 7 — GitHub Actions (CI/CD automatique)
 
-Dans chaque dépôt GitHub (SAFIRI et AFFINIORA), ajouter les secrets :
+```powershell
+.\setup-github-secrets.ps1 -SafiriRepo "AFROMIA/SAFIRI" -AffinioraRepo "AFROMIA/AFFINIORA"
+```
+
+Ou manuellement dans chaque dépôt GitHub (SAFIRI et AFFINIORA) :
 
 | Secret GitHub | Valeur |
 |---------------|--------|
@@ -176,6 +192,8 @@ Alarmes configurées :
 
 ## Documentation complémentaire
 
+- [Index infra](./README.md) — scripts et ordre d'exécution
+- [Déblocage IAM](./IAM_BLOCKER.md) — si `terraform apply` échoue (permissions)
 - [Architecture cloud détaillée](./ARCHITECTURE_CLOUD.md)
 - [Pipeline DevOps](./DEVOPS_PIPELINE.md)
 - [Politique IAM dev agent](./iam/afromia-dev-agent-policy.json)

@@ -27,15 +27,30 @@ Documentation, scripts d'orchestration et état d'avancement de l'écosystème *
 | [Comptes test](./docs/COMPTES_TEST.md) | Fixtures seed |
 | [Dépannage](./docs/TROUBLESHOOTING.md) | Problèmes fréquents |
 
-## Infrastructure & déploiement
+## Infrastructure & déploiement AWS
 
 | Document | Description |
 |----------|-------------|
-| [AWS Deployment](./docs/infra/AWS_DEPLOYMENT.md) | Guide déploiement cloud |
-| [DevOps Pipeline](./docs/infra/DEVOPS_PIPELINE.md) | CI/CD |
-| [Architecture cloud](./docs/infra/ARCHITECTURE_CLOUD.md) | Vue infra AWS |
-| [Scripts infra](./docs/infra/scripts/) | Bootstrap AWS, deploy staging |
-| [Terraform](./docs/infra/terraform/aws/) | Modules ECS/ECR référence |
+| [**Index infra**](./docs/infra/README.md) | Scripts, Terraform, ordre d'exécution staging |
+| [AWS Deployment](./docs/infra/AWS_DEPLOYMENT.md) | Guide complet déploiement cloud |
+| [IAM Blocker](./docs/infra/IAM_BLOCKER.md) | Déblocage permissions si Terraform échoue |
+| [DevOps Pipeline](./docs/infra/DEVOPS_PIPELINE.md) | CI/CD GitHub Actions → ECR → ECS |
+| [Architecture cloud](./docs/infra/ARCHITECTURE_CLOUD.md) | VPC, ALB, CloudFront, RDS, Redis |
+| [Terraform](./docs/infra/terraform/aws/) | Modules ECS/ECR/Networking (référence) |
+
+### Scripts déploiement (`docs/infra/scripts/`)
+
+| Script | Usage |
+|--------|-------|
+| `bootstrap-aws.ps1` | Terraform init + apply (infra staging) |
+| `deploy-staging.ps1` | Build images → ECR → ECS |
+| `setup-secrets.ps1` | Secrets Manager (`JWT`, DB, Redis…) |
+| `run-migrations.ps1` | Migrations Alembic via ECS |
+| `resume-deploy.ps1` | Reprend après fix IAM |
+| `setup-github-secrets.ps1` | Secrets AWS dans SAFIRI + AFFINIORA |
+| `configure-aws-profile.ps1` | Profil CLI `afromia-dev` |
+
+> **Ne jamais committer** : `terraform.tfvars`, `*.tfstate`, clés CSV IAM.
 
 ## Scripts de développement
 
