@@ -9,6 +9,7 @@ Index des guides et scripts pour mettre **SAFIRI + AFFINIORA** en ligne sur AWS 
 | [**AWS_DEPLOYMENT.md**](./AWS_DEPLOYMENT.md) | Checklist complète : IAM, Terraform, ECS, secrets, CI/CD |
 | [**ARCHITECTURE_CLOUD.md**](./ARCHITECTURE_CLOUD.md) | Schéma VPC, ALB, CloudFront, RDS, Redis |
 | [**DEVOPS_PIPELINE.md**](./DEVOPS_PIPELINE.md) | Workflows GitHub Actions SAFIRI + AFFINIORA |
+| [**GITHUB_BRANCH_PROTECTION.md**](./GITHUB_BRANCH_PROTECTION.md) | Règles PR + status checks (config org GitHub) |
 | [**IAM_BLOCKER.md**](./IAM_BLOCKER.md) | Déblocage permissions `afromia-dev-agent` (si Terraform bloqué) |
 
 ## Scripts (`scripts/`)

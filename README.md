@@ -84,11 +84,13 @@ Raccourcis racine : `start.bat`, `start-split.bat`, `start-celery.bat`, `start-a
 ## Structure locale recommandée
 
 ```
-votre-workspace/
-├── SAFIRI/          # git clone AFROMIA/SAFIRI
-├── AFFINIORA/       # git clone AFROMIA/AFFINIORA
-└── .github/         # ce dépôt (docs + scripts)
+votre-workspace/          # n'importe quelle machine
+├── .github/              # git clone AFROMIA/.github
+├── SAFIRI/               # git clone AFROMIA/SAFIRI
+└── AFFINIORA/            # git clone AFROMIA/AFFINIORA
 ```
+
+> Onboarding complet : [docs/README.md](./docs/README.md#onboarding--nouveau-développeur)
 
 ## License
 

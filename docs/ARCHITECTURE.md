@@ -1,127 +1,167 @@
 # AFROMIA — Architecture écosystème
 
-> **Démarrage local** : voir [README.md](./README.md) pour lancer SAFIRI et AFFINIORA.
+> **Démarrage** : [Guide développeur](./README.md) · **Cloud** : [ARCHITECTURE_CLOUD](./infra/ARCHITECTURE_CLOUD.md)
 
-## Vue d'ensemble
+**Version** : 2.1 · **Date** : 29 juin 2026
 
-L'écosystème AFROMIA est organisé en **deux dépôts applicatifs indépendants**, plus une documentation partagée :
+---
+
+## Organisation des dépôts Git
+
+L'écosystème est réparti sur **trois dépôts GitHub indépendants** — source de vérité en ligne, travail distribué possible par équipe :
+
+| Dépôt | Rôle | Contenu principal |
+|-------|------|-------------------|
+| [AFROMIA/.github](https://github.com/AFROMIA/.github) | **Informationnel** | Docs produit, scripts dev, Terraform AWS, recette, planning |
+| [AFROMIA/SAFIRI](https://github.com/AFROMIA/SAFIRI) | **Application** | Next.js, FastAPI, packages, CI/CD, Docker |
+| [AFROMIA/AFFINIORA](https://github.com/AFROMIA/AFFINIORA) | **IA** | ai-engine, Sarielle v2, contrat API, CI/CD |
 
 ```
-AFROMIA/
-├── SAFIRI/       # Dépôt app — frontend + backend + packages
-├── AFFINIORA/    # Dépôt IA — microservice ai-engine
-└── docs/         # Scripts dev, profils env, infra de référence
+┌─────────────────────────────────────────────────────────────┐
+│              AFROMIA/.github (docs + infra)                 │
+│   ETAT_AVANCEMENT · modules · scripts · Terraform AWS       │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ orchestration locale / doc
+         ┌─────────────────┴─────────────────┐
+         ▼                                   ▼
+┌─────────────────┐                 ┌─────────────────┐
+│     SAFIRI      │    REST API     │    AFFINIORA    │
+│  frontend+API   │◄───────────────►│   ai-engine     │
+│  + Celery       │                 │   Sarielle v2   │
+└────────┬────────┘                 └────────┬────────┘
+         │                                   │
+         └───────────────┬───────────────────┘
+                         ▼
+              AWS ECS Fargate (staging/prod)
+              RDS · Redis · S3 · CloudFront · ALB
 ```
 
-**SAFIRI** et **AFFINIORA** sont des dépôts Git séparés. Ils communiquent uniquement via **API REST** (pas de dépendance de code directe).
+**Principe** : pas de dépendance de code entre SAFIRI et AFFINIORA — uniquement **REST** (+ WebSocket dans SAFIRI pour le temps réel).
+
+---
 
 ## SAFIRI
 
-Monorepo npm (Turborepo) pour l'application de matchmaking :
+Monorepo npm (Turborepo) :
 
 ```
 SAFIRI/
-├── apps/
-│   ├── frontend/     # Next.js 15 PWA
-│   └── backend/      # FastAPI async API
-├── packages/
-│   ├── shared-types/
-│   ├── ui/
-│   └── config/
-├── infra/            # Docker Compose, K8s, CI/CD
+├── apps/frontend/     # Next.js 15 PWA
+├── apps/backend/      # FastAPI, Alembic, WebSockets, Celery
+├── packages/          # shared-types, ui, config
+├── infra/             # docker-compose, K8s, GitHub Actions
 └── docs/
 ```
+
+**Nouveautés juin 2026** : channels, wallet Safir, badges, intentions i18n, speed dating, profile IA v2, debug IaLab.
+
+---
 
 ## AFFINIORA
 
-Dépôt dédié au moteur IA self-hosted (HuggingFace) :
+Microservice IA HuggingFace + routeur LLM :
 
 ```
 AFFINIORA/
-├── services/
-│   └── ai-engine/    # Scoring, personnalité, anti-fake, traduction
-├── infra/
-└── docs/
+├── services/ai-engine/
+└── docs/CONTRACT_V2.md
 ```
 
-## Principes
+**Contrat v2** : `UserProfileIA`, `profile-full`, coaching, Sarielle avec RAG.
 
-- **Dépôts séparés** : déploiement et versioning indépendants
-- **REST first** + WebSocket (chat temps réel dans SAFIRI)
-- **Affiniora** : microservice autonome, contrat API versionné
-- **IA 100% self-hosted** : modèles HuggingFace locaux (pas d'OpenAI au MVP)
+---
 
-## Stack
+## Environnements
 
-| Couche   | Technologie                              |
-|----------|------------------------------------------|
-| Backend  | FastAPI + SQLAlchemy 2.0 async + Alembic |
-| Frontend | Next.js 15 + Zustand + TanStack Query    |
-| AI       | HuggingFace Transformers (AFFINIORA)     |
-| DB       | PostgreSQL 16 + PostGIS + pgvector       |
-| Cache    | Redis 7 + Celery                         |
-| Deploy   | AWS ECS Fargate (Terraform de référence) |
+| Env | Compute | DB | Doc |
+|-----|---------|-----|-----|
+| **Local** | Docker + processus locaux | Postgres/Redis/MinIO Docker | [README](./README.md) |
+| **Staging AWS** | ECS Fargate `afromia-staging` | RDS + ElastiCache | [AWS_DEPLOYMENT](./infra/AWS_DEPLOYMENT.md) |
+| **Production** | ECS (phase S8) | RDS Multi-AZ | [PLANNING_MVP](./PLANNING_MVP.md) |
 
-## Flux de données
+### Pipeline déploiement staging (juin 2026)
 
-1. Swipe utilisateur → Backend SAFIRI → score Affiniora (cache Redis) ; au match, Celery calcule le score définitif
-2. Match créé → Conversation → WebSocket chat (UI optimiste, typing, accusés de lecture) via Redis Pub/Sub
-3. Présence en ligne → WebSocket `/ws/presence` + clés Redis `online:{user_id}`
-4. Boutique cadeaux → `/api/v1/shop/*` (virtuel, physique, premium) → messages type `gift` dans le chat
-5. Premium → Stripe webhook → rôle utilisateur mis à jour
-6. Confidentialité profil → `Profile.visibility` (`public` | `matches_only`)
+```
+Terraform (bootstrap-aws.ps1)
+  → VPC, ALB, CloudFront, RDS, Redis, ECR, ECS
+deploy-staging.ps1
+  → Build Docker → push ECR → rolling update ECS
+setup-secrets.ps1 + run-migrations.ps1
+  → Secrets Manager + Alembic ECS task
+GitHub Actions (SAFIRI + AFFINIORA)
+  → CI/CD automatique sur push main
+```
 
-## Nouveautés temps réel & social (2026)
+État actuel : Terraform **planifié** (79 ressources) ; apply **bloqué IAM** — voir [IAM_BLOCKER.md](./infra/IAM_BLOCKER.md).
 
-| Fonctionnalité | Frontend | Backend |
-|----------------|----------|---------|
-| Chat optimiste | `useChatWebSocket` | `chat_ws.py` + `message.ack` enrichi |
-| Indicateur de frappe | `ChatComposer.onTyping` | `ChatService.set_typing` |
-| Discover Hub flottant | `DiscoverFloatingHub` | — |
-| Affiniora chat | `AffinioraChatTab` | `POST /chat/suggestions/affiniora` |
-| Boutique | `/shop`, `GiftShopTab` | `shop.py` + migration `006` |
-| Présence admin | `OnlineUsersPanel` | `presence_ws.py`, `GET /admin/online-users` |
-| Privacy profil | Settings | `profiles.visibility` |
+---
 
-## Contrat IA v2 & profil enrichi (juin 2026)
+## Stack technique
+
+| Couche | Technologie |
+|--------|-------------|
+| Backend | FastAPI, SQLAlchemy 2 async, Alembic |
+| Frontend | Next.js 15, Zustand, TanStack Query, next-intl |
+| IA | HuggingFace, routeur cloud/local, pgvector RAG |
+| DB | PostgreSQL 16 + PostGIS + pgvector |
+| Cache / queues | Redis 7, Celery |
+| Cloud | AWS ECS Fargate, Terraform, CloudWatch |
+| CI | GitHub Actions → ECR → ECS |
+
+---
+
+## Flux de données (résumé)
+
+1. **Discover** → SAFIRI backend → AFFINIORA score (cache Redis 24h)
+2. **Analyse profil** → `UserProfileIA` + RAG pgvector → AFFINIORA `profile-full` → Celery
+3. **Match** → WebSocket chat (Redis Pub/Sub), typing, acks
+4. **Channels** → offerings, abonnements, engagement, inquiries
+5. **Wallet** → ledger Safir, Campay/Stripe
+6. **Premium** → Stripe webhook → `ia_gating` (cloud LLM)
+
+---
+
+## Fonctionnalités par couche (2026)
+
+### Temps réel & social
+
+| Feature | Frontend | Backend |
+|---------|----------|---------|
+| Chat optimiste | WebSocket hooks | `chat_ws.py` |
+| Discover Hub | `DiscoverFloatingHub` | discovery helpers |
+| Channels | `/channels`, studio | `channels.py` 012–021 |
+| Speed dating | `/speed-dating` | orchestrator + LiveKit |
+
+### IA v2
 
 | Composant | Rôle |
 |-----------|------|
-| `UserProfileIA` | Agrégat canonique (quiz, bio, intentions, coaching) — `shared-types/profile-ia.ts` |
-| `POST /v1/analyze/profile-full` | Analyse complète AFFINIORA → `ProfileAnalysisReport` |
-| `RagService` | Recherche hybride pgvector côté SAFIRI avant appel IA |
-| `ia_gating.py` | Limites free/premium (coaching, cloud LLM, aide rédaction) |
-| Routeur LLM | Premium + clé cloud → OpenAI/Anthropic ; sinon Qwen local |
+| `UserProfileIA` | Agrégat canonique cross-repo |
+| `RagService` | Recherche hybride SAFIRI |
+| `ia_gating.py` | Limites free/premium |
+| Routeur LLM | Cloud (premium) / Qwen local |
 
-Voir [AFFINIORA/docs/CONTRACT_V2.md](../AFFINIORA/docs/CONTRACT_V2.md).
+---
 
-## Channels, wallet & engagement (juin 2026)
+## Outils partagés (dépôt `.github`)
 
-| Fonctionnalité | Frontend | Backend |
-|----------------|----------|---------|
-| Channels créateur | `/channels`, `/creator/studio` | `channels.py`, migrations `012`–`021` |
-| Abonnements & engagement | `ChannelsPublicNav` | `channel_engagement.py`, `channel_subscriptions` |
-| Demandes contact | panneau inquiry | `channel_inquiries.py` |
-| Wallet Safir | `/wallet` | `wallet.py`, `currency.py`, migration `013` |
-| Paiements | `/premium/checkout` | Campay, Stripe webhooks |
-| Badges | composants `badges/` | `badges.py`, `badge_service.py` |
-| Intentions i18n | `IntentionProbeModal` | `intentions.py`, migrations `017`–`018` |
-| Speed dating | `/speed-dating` | `speed_dating.py`, WebSocket dédié |
+| Chemin | Rôle |
+|--------|------|
+| `docs/scripts/` | Bootstrap, dev, celery, affiniora, start-split |
+| `docs/env-profiles/` | Templates `.env` local/docker/supabase |
+| `docs/infra/terraform/aws/` | Infrastructure AWS référence |
+| `docs/infra/scripts/` | bootstrap-aws, deploy-staging, secrets, migrations |
+| `docs/modules/` | 22 fiches module |
+| `Makefile` | Orchestration racine |
 
-## Outils partagés (docs/)
+---
 
-| Dossier | Rôle |
-|---------|------|
-| `docs/scripts/` | Bootstrap, dev local, migrations (orchestration multi-dépôts) |
-| `docs/env-profiles/` | Templates `.env` (local, docker, supabase) |
-| `docs/infra/terraform/` | Terraform AWS de référence |
+## Documentation
 
-## Documentation par dépôt
-
-- [Guide développeur local (README)](./README.md)
-- [Dépannage](./TROUBLESHOOTING.md)
-- [SAFIRI](../SAFIRI/docs/ARCHITECTURE.md)
-- [AFFINIORA](../AFFINIORA/docs/ARCHITECTURE.md)
-- [Backend SAFIRI](../SAFIRI/apps/backend/docs/ARCHITECTURE.md)
-- [Frontend SAFIRI](../SAFIRI/apps/frontend/docs/ARCHITECTURE.md)
-- [AI Engine](../AFFINIORA/services/ai-engine/docs/ARCHITECTURE.md)
+| Document | Lien |
+|----------|------|
+| Guide dev | [README.md](./README.md) |
+| État réel | [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md) |
+| Cloud AWS | [infra/ARCHITECTURE_CLOUD.md](./infra/ARCHITECTURE_CLOUD.md) |
+| SAFIRI | [github.com/AFROMIA/SAFIRI](https://github.com/AFROMIA/SAFIRI) |
+| AFFINIORA | [github.com/AFROMIA/AFFINIORA](https://github.com/AFROMIA/AFFINIORA) |

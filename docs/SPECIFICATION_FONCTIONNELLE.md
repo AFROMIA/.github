@@ -1,11 +1,12 @@
 # AFROMIA / SAFIRI — Spécification fonctionnelle MVP v1
 
-**Version** : 2.0  
-**Date** : 22 juin 2026  
+**Version** : 2.1  
+**Date** : 29 juin 2026  
 **Référence vision** : [VISION.md](./VISION.md)  
 **État réel** : [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md)  
 **Recette** : [RECETTE.md](./RECETTE.md)  
-**Fiches modules** : [modules/README.md](./modules/README.md)
+**Fiches modules** : [modules/README.md](./modules/README.md) (01–22)  
+**Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [`.github`](https://github.com/AFROMIA/.github)
 
 ---
 
@@ -43,11 +44,14 @@
 
 Ce document décrit **toutes les fonctionnalités du MVP v1** de l'écosystème AFROMIA :
 
-- **SAFIRI** : application de rencontre (frontend Next.js 15 + backend FastAPI)
-- **AFFINIORA** : microservice IA (scoring, personnalité, anti-fake, agent Sarielle)
+- **SAFIRI** : application de rencontre (frontend Next.js 15 + backend FastAPI) — dépôt [SAFIRI](https://github.com/AFROMIA/SAFIRI)
+- **AFFINIORA** : microservice IA — dépôt [AFFINIORA](https://github.com/AFROMIA/AFFINIORA)
 - **Sarielle** : agent conversationnel intégré à SAFIRI
+- **Documentation & infra** : dépôt [`.github`](https://github.com/AFROMIA/.github) (spec, recette, Terraform AWS, scripts)
 
-**Hors périmètre MVP v1** : apps natives iOS/Android, entraînement modèles custom, dashboard AFFINIORA standalone, liveness vidéo ML réel.
+**Modules extension juin 2026** (fiches 19–22) : channels créateur, wallet Safir, badges & intentions i18n, speed dating. Voir [modules/README.md](./modules/README.md).
+
+**Hors périmètre MVP v1** : apps natives, dashboard AFFINIORA standalone, liveness ML réel, LiveKit cloud prod.
 
 > **État d'implémentation** : voir [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md). Ce document décrit le **quoi** ; l'état d'avancement réel est dans le document dédié.
 

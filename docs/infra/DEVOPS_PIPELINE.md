@@ -23,6 +23,21 @@ L'écosystème AFROMIA utilise **deux dépôts Git indépendants** avec des pipe
                                        └──────────────┘
 ```
 
+## Pipeline DevOps (gates qualité)
+
+Voir [GITHUB_BRANCH_PROTECTION.md](./GITHUB_BRANCH_PROTECTION.md) pour la configuration des branch protection rules.
+
+### Gates obligatoires avant merge / deploy
+
+| Gate | Seuil |
+|------|-------|
+| Tests unitaires backend | 90 % couverture (`app.core` + `app.domain`) |
+| Tests intégration backend | 90 % couverture (infra + auth API) |
+| Tests unitaires frontend | 90 % couverture (`src/lib`) |
+| E2E parcours critiques | 80 % du catalogue (`docs/E2E_CRITICAL_PATHS.md`) |
+
+Le déploiement staging (`deploy-staging.yml`) appelle `ci.yml` via `workflow_call` et ne s'exécute qu'après `quality-gate`.
+
 ## Dépôts et workflows
 
 ### SAFIRI (`SAFIRI/.github/workflows/`)

@@ -1,9 +1,9 @@
 # AFROMIA / SAFIRI — Plan de recette & couverture tests
 
-**Version** : 2.0  
-**Date** : 22 juin 2026  
+**Version** : 2.1  
+**Date** : 29 juin 2026  
 
-**Documents liés** : [État d'avancement](./ETAT_AVANCEMENT.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Comptes test](./COMPTES_TEST.md) · [Modules](./modules/README.md)
+**Documents liés** : [État d'avancement](./ETAT_AVANCEMENT.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Comptes test](./COMPTES_TEST.md) · [Modules](./modules/README.md) · [Déploiement AWS](./infra/README.md)
 
 ---
 
@@ -108,8 +108,8 @@ npx playwright test
 
 | Couche | Fichiers | Tests | Couverture fonctionnelle estimée |
 |--------|----------|-------|----------------------------------|
-| Backend unitaire | 7 | ~41 | Auth, RBAC, discovery filtres — **~15 %** du spec |
-| AFFINIORA | 5 | 18 | Scoring, personnalité, Sarielle — **~40 %** du moteur IA |
+| Backend unitaire | 10+ | ~50+ | Auth, RBAC, discovery, profile IA, résilience — **~20 %** |
+| AFFINIORA | 8+ | 25+ | Scoring, profile v2, Sarielle — **~50 %** du moteur IA |
 | E2E | 1–2 | 3 | **< 5 %** des parcours utilisateur |
 | Recette manuelle | — | 0 validé | Checklist ci-dessous — **à exécuter** |
 
@@ -135,6 +135,11 @@ npx playwright test
 | Notifications | ❌ | ⬜ | Push subscribe |
 | Admin | 🟡 RBAC | ⬜ | Modération workflow |
 | RGPD | ❌ | ⬜ | Export + delete |
+| Channels | ❌ | ⬜ | Parcours créateur → offering |
+| Wallet Safir | ❌ | ⬜ | Crédit, tip |
+| Badges / intentions | ❌ | ⬜ | Sondes i18n |
+| Speed dating | ❌ | ⬜ | Session LiveKit |
+| Infra AWS staging | ❌ | ⬜ | Health checks CloudFront/ALB |
 | Design/UX | ❌ | ⬜ | Thèmes, responsive |
 
 Légende : ✅ = tests existants · ⬜ = non exécuté · ❌ = aucun test
@@ -203,27 +208,56 @@ Légende : ✅ = tests existants · ⬜ = non exécuté · ❌ = aucun test
 | R-P2-07 | Profil public / privacy | matches_only masque profil | ⬜ |
 | R-P2-08 | Push PWA | Notification match reçue | ⬜ |
 
+### 4.7 Nouveautés juin 2026 (P1)
+
+| ID | Scénario | Résultat attendu | Statut |
+|----|----------|------------------|--------|
+| R-P1-14 | Channel créateur | Studio → publier offering → page publique | ⬜ |
+| R-P1-15 | Wallet Safir | Solde affiché, tip sur profil | ⬜ |
+| R-P1-16 | Profile IA v2 | Analyse complète → rapport coaching | ⬜ |
+| R-P1-17 | Badges | Attribution visible sur profil | ⬜ |
+| R-P1-18 | Intentions i18n | Sonde modal + pagination | ⬜ |
+
+### 4.8 Déploiement AWS staging (P0 infra)
+
+| ID | Scénario | Résultat attendu | Statut |
+|----|----------|------------------|--------|
+| R-INF-01 | Terraform apply | 79 ressources créées sans erreur IAM | ⬜ |
+| R-INF-02 | Health backend | `GET /health` via ALB → 200 | ⬜ |
+| R-INF-03 | Health AFFINIORA | Service ECS ai-engine healthy | ⬜ |
+| R-INF-04 | Migrations ECS | `run-migrations.ps1` → head Alembic | ⬜ |
+| R-INF-05 | Frontend CloudFront | Page d'accueil charge < 3s | ⬜ |
+| R-INF-06 | GitHub Actions | Push main → deploy ECR réussi | ⬜ |
+| R-INF-07 | Secrets Manager | App démarre avec secrets injectés | ⬜ |
+
+Voir [infra/README.md](./infra/README.md) et [IAM_BLOCKER.md](./infra/IAM_BLOCKER.md).
+
 ---
 
 ## 5. Prérequis environnement recette
 
-```powershell
-# 1. Stack complète
-cd "C:\Users\MAITRE\Documents\IronCorp technologies\AFROMIA"
+### Local (développeur)
+
+```bash
+# Cloner les 3 dépôts (voir docs/README.md)
+cd .github
 make bootstrap
-make dev
-
-# 2. Celery (terminal séparé — OBLIGATOIRE pour IA async)
-cd SAFIRI\apps\backend
-$env:ENV_FILE = "..\..\.env"
-python -m celery -A app.workers.celery_app worker --loglevel=info
-
-# 3. Vérifier services
-curl http://localhost:8000/health
-curl http://localhost:8001/health   # AFFINIORA
+make dev-split   # recommandé : inclut Celery + Affiniora
 ```
 
-**Comptes** : voir [COMPTES_TEST.md](./COMPTES_TEST.md).
+```powershell
+# Vérifier services
+curl http://localhost:8000/health
+curl http://localhost:8001/health
+```
+
+### Staging AWS
+
+- Profil AWS `afromia-dev` configuré
+- Infrastructure déployée via [bootstrap-aws.ps1](./infra/scripts/bootstrap-aws.ps1)
+- Secrets dans Secrets Manager ([setup-secrets.ps1](./infra/scripts/setup-secrets.ps1))
+
+**Comptes** : [COMPTES_TEST.md](./COMPTES_TEST.md)
 
 ---
 
@@ -250,6 +284,7 @@ curl http://localhost:8001/health   # AFFINIORA
 
 ### Priorité P0 (avant staging)
 
+- [ ] R-INF-01 à R-INF-07 : recette infra AWS
 - [ ] E2E : inscription wizard → personality → discover
 - [ ] E2E : swipe → match → chat (message visible)
 - [ ] pytest : intégration chat WebSocket

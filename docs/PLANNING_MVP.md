@@ -1,11 +1,12 @@
 # AFROMIA — Planning MVP v1
 
-**Version** : 1.0  
-**Date** : 19 juin 2026  
-**Objectif production** : **15 août 2026** (mi-août)  
-**Durée restante** : ~8 semaines  
+**Version** : 1.1  
+**Date** : 29 juin 2026  
+**Objectif production** : **15 août 2026**  
 
-**Documents liés** : [VISION.md](./VISION.md) · [SPECIFICATION_FONCTIONNELLE.md](./SPECIFICATION_FONCTIONNELLE.md) · [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md)
+**Documents liés** : [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) · [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md) · [Infra AWS](./infra/README.md)
+
+**Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [`.github`](https://github.com/AFROMIA/.github)
 
 ---
 
@@ -35,7 +36,7 @@ Livrer le **MVP v1 full spec** de SAFIRI + AFFINIORA en production mi-août 2026
 - la modération et la conformité RGPD en place ;
 - une identité de marque cohérente et un plan de lancement initial.
 
-**État au 19 juin 2026** : sprints 1 à 4 **livrés côté code** (~85 % du MVP). Sprints 5 à 8 = **durcissement, config, recette, déploiement, marketing**.
+**État au 29 juin 2026** : sprints 1–4 **livrés** (code ~90 %). Sprint 5 en cours : stabilisation + **déploiement AWS staging** (Terraform plan OK, IAM à débloquer). Documentation et scripts **100 % sur Git** — prêt pour contributeurs via accès GitHub org.
 
 ---
 
@@ -49,7 +50,7 @@ Livrer le **MVP v1 full spec** de SAFIRI + AFFINIORA en production mi-août 2026
 | **Produit** | Roadmap, user stories, priorisation backlog | Estimation technique, implémentation |
 | **Design & branding** | Direction créative, charte, copywriting, assets | Intégration UI, design system |
 | **Marketing** | Stratégie GTM, réseaux sociaux, landing copy | SEO technique, perf, analytics |
-| **Documentation** | Vision, specs, contenus CMS/légaux | README, architecture, scripts dev |
+| **Documentation** | Vision, specs, contenus CMS/légaux | Docs `.github` sur Git, onboarding contributeurs |
 | **Tests** | Recette fonctionnelle, parcours utilisateur | Tests auto (pytest, Playwright), fixes |
 | **Gestion de projet** | Planning, suivi sprint, communication | Exécution technique, démo fin de sprint |
 | **IA / prompts** | Validation qualité suggestions & UX IA | Prompts Affiniora, tuning scoring, Celery |
@@ -61,6 +62,15 @@ Livrer le **MVP v1 full spec** de SAFIRI + AFFINIORA en production mi-août 2026
 - Sarielle teste **chaque fin de sprint** sur un environnement stable (staging).
 - Lead Dev corrige les bugs bloquants en priorité sur retour Sarielle.
 - Pas de nouvelle feature majeure après le **21 juillet 2026** (freeze scope).
+
+### Contributeurs externes
+
+Tout nouveau dev peut rejoindre un chantier via :
+
+1. Accès GitHub org AFROMIA (repos SAFIRI, AFFINIORA, `.github`)
+2. Lecture [docs/README.md](./README.md) — clone 3 dépôts, `make dev-split`
+3. Choix d'un module dans [modules/README.md](./modules/README.md)
+4. (Optionnel) Profil AWS `afromia-dev` pour déploiement
 
 ---
 
@@ -94,7 +104,7 @@ Légende : **R** = Responsible · **A** = Accountable · **C** = Consulted · **
 | **S2** | Sem. 3–4 (mai–juin) | Vérification vidéo, sécurité, premium features | ✅ Livré |
 | **S3** | Sem. 5–6 (juin) | WebRTC, chat enrichi, PayPal, push | ✅ Livré |
 | **S4** | Sem. 7–8 (juin) | Live, CMS, shop, KPI admin, E2E smoke | ✅ Livré |
-| **S5** | 23 juin – 6 juil. | Stabilisation, recette Sarielle, bugs critiques | 🔵 En cours |
+| **S5** | 23 juin – 6 juil. | Stabilisation, doc Git, déploiement AWS, recette | 🔵 En cours |
 | **S6** | 7 – 20 juil. | Config services tiers + durcissement sécurité | ⬜ Planifié |
 | **S7** | 21 juil. – 3 août | Staging, perf, E2E complets, contenu légal | ⬜ Planifié |
 | **S8** | 4 – 15 août. | Prod deploy, monitoring, lancement marketing | ⬜ Planifié |
@@ -105,8 +115,8 @@ Légende : **R** = Responsible · **A** = Accountable · **C** = Consulted · **
 
 ```
 2026
-Juin    │ S4 fin ████ │ S5 début ████
-        │ 19 juin = aujourd'hui
+Juin    │ S4 fin ████ │ S5 ████ (AWS staging)
+        │ 29 juin = aujourd'hui
 ────────┼────────────────────────────────────────
 Juil    │ S5 ████████ │ S6 ████████ │ S7 ████████
         │              │ 21 juil = FREEZE SCOPE
@@ -119,7 +129,8 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Date | Jalon |
 |------|-------|
 | **19 juin 2026** | Fin dev features MVP (code base) |
-| **6 juillet 2026** | Fin recette S5 — backlog bugs P0 vide |
+| **29 juin 2026** | Terraform + scripts AWS sur Git |
+| **6 juillet 2026** | Fin recette S5 — IAM OK, staging déployé ou plan B documenté |
 | **20 juillet 2026** | Stripe/PayPal/LiveKit/VAPID configurés |
 | **21 juillet 2026** | **Freeze scope** — plus de nouvelles features |
 | **3 août 2026** | Staging validé par Sarielle (sign-off recette) |
@@ -202,10 +213,11 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Tâche | Priorité | Estimation |
 |-------|----------|------------|
 | Fix bugs remontés S1–S4 | P0 | 3 j |
-| `make dev` stable (logs centralisés Affiniora) | P1 | 0.5 j |
-| Documenter runbook Celery + Affiniora | P1 | 0.5 j |
+| `make dev-split` documenté + onboarding README | P1 | 0.5 j |
+| **Terraform AWS : débloquer IAM + apply staging** | P0 | 2 j |
+| `deploy-staging.ps1` + smoke R-INF-* | P0 | 1 j |
 | Corriger régressions Discover / chat WS | P0 | 2 j |
-| Améliorer seed data pour recette Sarielle | P2 | 1 j |
+| Seed enrichi (channels, wallet) | P2 | 1 j |
 
 #### Sarielle
 
@@ -259,7 +271,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 
 | Tâche | Priorité |
 |-------|----------|
-| Deploy staging (AWS/Vercel ou équivalent) | P0 |
+| Deploy staging AWS ECS | P0 |
 | E2E Playwright parcours complet | P0 |
 | Perf Discover + Affiniora (cache, timeouts) | P1 |
 | Monitoring Sentry + Prometheus prod | P1 |
@@ -331,7 +343,9 @@ Tâches continues sur plusieurs sprints :
 | Tests E2E extension | Lead Dev | S5–S7 |
 | Branding assets (logo, OG images, favicon) | Sarielle | S5–S6 |
 | Analytics (Plausible/GA) | Lead Dev | S7 |
-| Terraform / infra prod | Lead Dev | S6–S7 |
+| Terraform / infra staging | Lead Dev | S5–S6 |
+| Documentation `.github` à jour | Lead Dev + Sarielle | S5 (continu) |
+| Onboarding contributeurs GitHub | Sarielle | S5 |
 
 ---
 
@@ -373,7 +387,8 @@ Tâches continues sur plusieurs sprints :
 
 ### Technique (Lead Dev)
 
-- [ ] Migrations Alembic appliquées prod
+- [ ] Terraform staging appliqué (R-INF-01)
+- [ ] Health checks ALB + CloudFront (R-INF-02–05)
 - [ ] AFFINIORA ai-engine deployé et healthy
 - [ ] Celery worker + beat prod
 - [ ] MinIO/S3 prod + CDN médias
@@ -448,4 +463,4 @@ Tâches continues sur plusieurs sprints :
 
 ---
 
-*Prochaine mise à jour : fin sprint 5 (6 juillet 2026).*
+*Prochaine mise à jour : fin sprint 5 (6 juillet 2026) ou après apply Terraform staging.*

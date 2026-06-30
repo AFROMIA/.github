@@ -1,12 +1,12 @@
 # AFROMIA / SAFIRI — État d'avancement réel
 
-**Version** : 2.2  
-**Date** : 28 juin 2026  
+**Version** : 2.3  
+**Date** : 29 juin 2026  
 **Statut** : Document de vérité technique — à mettre à jour à chaque sprint  
 
 **Documents liés** : [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
 
-**Dépôts applicatifs** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
+**Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Docs `.github`](https://github.com/AFROMIA/.github) · [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
 
 ---
 
@@ -25,16 +25,18 @@
 
 ## 1. Synthèse exécutive
 
-> **Constat honnête (juin 2026)** : la base de code est **large et structurée** (35+ routes frontend, 30+ modules API backend, microservice AFFINIORA séparé, 10 migrations récentes). Le sprint juin a livré **channels créateur, wallet Safir, badges, intentions i18n, speed dating et contrat IA v2** — mais **peu de parcours sont validés bout-en-bout** sans lancer manuellement AFFINIORA, Celery et configurer les secrets tiers.
+> **Constat honnête (juin 2026)** : code **vaste** (35+ routes, 30+ modules API, 10 migrations récentes, Terraform 79 ressources). Sprint juin : channels, wallet, badges, intentions, speed dating, contrat IA v2, **pipeline déploiement AWS**. La doc et les scripts sont sur Git ([`.github`](https://github.com/AFROMIA/.github)) — un nouveau dev clone 3 dépôts et suit [README.md](./README.md). Recette bout-en-bout et staging AWS **non validés**.
 
 | Indicateur | Valeur estimée | Commentaire |
 |------------|----------------|-------------|
-| Code backend (modules API) | ~90 % écrit | Channels, wallet, IA v2 ajoutés ; intégration peu testée |
-| Code frontend (pages/composants) | ~85 % écrit | Nouvelles pages channels/wallet/speed-dating ; quelques routes legacy |
-| Intégration AFFINIORA v2 | ~60 % opérationnelle | Contrat UserProfileIA codé ; dépend Docker + Celery + clés cloud premium |
-| Services tiers configurés | ~15 % | Stripe/Campay codés ; clés staging absentes |
-| Tests automatisés | ~25 % couverture utile | +tests profile IA, résilience DB/Redis ; E2E smoke limités |
-| Recette manuelle validée | ~25 % | Channels et wallet non sign-off |
+| Code backend | ~90 % écrit | Channels, wallet, IA v2 |
+| Code frontend | ~85 % écrit | Nouvelles pages livrées |
+| Intégration AFFINIORA v2 | ~60 % | Docker + Celery + clés cloud |
+| **Infra AWS staging** | ~70 % préparé | Terraform plan OK ; apply bloqué IAM |
+| Services tiers | ~15 % | Stripe/Campay codés, clés absentes |
+| Tests automatisés | ~25 % | +profile IA, résilience DB/Redis |
+| Recette manuelle | ~25 % | Staging non sign-off |
+| **Documentation Git** | ~95 % | Modules 01–22, infra, scripts en ligne |
 
 **Ce qui marche le mieux** : design system, navigation, admin shell, debug panel IA Lab, fixtures enrichies, orchestration `make dev-split`.
 
@@ -101,9 +103,19 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 | **Intentions i18n** | Catalogue + sondes + 10 locales ; `IntentionProbeModal`. Traductions partiellement validées par locuteurs natifs. | 1) Revue linguistique FR/EN/AR 2) Script `merge-i18n-extensions.mjs` en CI 3) Tests pagination intentions | next-intl, i18n, UX research |
 | **Speed dating** | Orchestrateur + WS + LiveKit helpers ; room UI basique. LiveKit local requis, non documenté au onboarding. | 1) Guide LiveKit dans [start.md](../start.md) 2) Test session 2 utilisateurs seed 3) Gestion timeouts | WebSocket, LiveKit, orchestration temps réel |
 | **Résilience DB/Redis** | Couche `resilience.py` + client Redis dédié ; tests unitaires. Pas de chaos testing. | 1) Simuler panne Redis en dev 2) Circuit breaker dashboard 3) Alertes Prometheus | SRE, PostgreSQL, Redis, pytest |
-| **Debug panel IA Lab** | Appels directs navigateur → AFFINIORA (CORS + admin key). Fonctionnel si AFFINIORA up. | 1) Documenter variables `NEXT_PUBLIC_AFFINIORA_*` 2) Masquer en production 3) Fixtures knowledge | Next.js, sécurité API keys, DX |
+| **Déploiement AWS staging** | Terraform + scripts livrés ; ECR/ECS prêts ; IAM `afromia-dev-agent` sans droits create | 1) [IAM_BLOCKER](./infra/IAM_BLOCKER.md) 2) `bootstrap-aws.ps1` 3) smoke health checks | AWS IAM, Terraform, ECS, Docker |
+| **Debug panel IA Lab** | Appels directs navigateur → AFFINIORA. Fonctionnel si service up. | 1) Variables `NEXT_PUBLIC_AFFINIORA_*` 2) Masquer en prod | Next.js, CORS, sécurité clés |
 
----
+### Onboarding équipe distribuée
+
+| Besoin | Ressource Git |
+|--------|---------------|
+| Choisir un chantier | [modules/](./modules/README.md) + tableau ci-dessus |
+| Setup local | [README.md](./README.md) — clone 3 dépôts |
+| Déployer | [infra/README.md](./infra/README.md) |
+| Tester | [RECETTE.md](./RECETTE.md) |
+
+**Prérequis org** : accès GitHub AFROMIA (SAFIRI, AFFINIORA, `.github`). Configurer [branch protection](./infra/GITHUB_BRANCH_PROTECTION.md) pour travail en équipe. AWS optionnel.
 
 ## 5. Bloqueurs transverses
 
@@ -116,6 +128,8 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 | B5 | **Tests E2E insuffisants** | Régressions non détectées | Tous | Playwright parcours MVP + channels |
 | B6 | **CMS sans seed** | Homepage fallback i18n seul | 01, 13 | Publier contenu admin |
 | B7 | **Chat optimiste fragile** | Refresh nécessaire parfois | 08 | Fix P0 WebSocket ack |
+| B8 | **IAM AWS insuffisant** | Terraform apply impossible | 18 | [IAM_BLOCKER](./infra/IAM_BLOCKER.md) |
+| B9 | **Staging non recetté** | Pas d'URL publique validée | Tous | Deploy + smoke après IAM |
 
 ---
 
@@ -168,14 +182,14 @@ make bootstrap → make dev-split
 
 ## 8. Prochaines priorités recommandées
 
-1. **Déploiement AWS staging** — débloquer IAM, `bootstrap-aws.ps1`, premier deploy ECR/ECS
+1. **Déploiement AWS staging** — débloquer IAM, `bootstrap-aws.ps1`, deploy ECR/ECS, smoke
 2. **Config staging** — Stripe test + Campay sandbox + clés AFFINIORA cloud
-2. **Recette channels** — parcours créateur → offering → checkout
-3. **Recette wallet** — crédit Safir, tip, conversion devise
-4. **AFFINIORA fiable** — `make dev-split` par défaut ; scores réels Discover
-5. **Chat P0** — fix message optimiste
-6. **Speed dating** — session LiveKit 2 users documentée
+3. **Recette channels** — parcours créateur → offering → checkout
+4. **Recette wallet** — crédit Safir, tip, conversion devise
+5. **AFFINIORA fiable** — `make dev-split` par défaut ; scores réels Discover
+6. **Chat P0** — fix message optimiste
 7. **E2E Playwright** — étendre au-delà du smoke MVP
+8. **Accès GitHub** — inviter contributeurs sur les 3 dépôts
 
 ---
 

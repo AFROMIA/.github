@@ -1,7 +1,23 @@
 # AFROMIA — Architecture Cloud AWS
 
-## Diagramme complet
+**Version** : 1.1 · **Date** : 29 juin 2026  
+**Guides** : [AWS_DEPLOYMENT](./AWS_DEPLOYMENT.md) · [DEVOPS_PIPELINE](./DEVOPS_PIPELINE.md) · [Scripts](./README.md)
 
+## État du déploiement (juin 2026)
+
+| Étape | Statut | Référence |
+|-------|--------|-----------|
+| Terraform modules (VPC, ECS, RDS, ALB, CloudFront, ECR) | ✅ Versionné Git | `terraform/aws/` |
+| Scripts bootstrap / deploy / secrets / migrations | ✅ Versionné Git | `scripts/` |
+| `terraform plan` (79 ressources) | ✅ OK | Profil `afromia-dev` |
+| `terraform apply` | 🟡 Bloqué IAM | [IAM_BLOCKER.md](./IAM_BLOCKER.md) |
+| Images Docker → ECR | 🟡 Script prêt | `deploy-staging.ps1` |
+| GitHub Actions → ECS | 🟡 Workflows dans SAFIRI/AFFINIORA | `setup-github-secrets.ps1` |
+| URL staging publique | ❌ Non validée | Recette R-INF-* |
+
+> **Onboarding infra** : tout est dans le dépôt [`.github`](https://github.com/AFROMIA/.github). Seuls `terraform.tfvars` et clés IAM restent locaux (voir `.gitignore`).
+
+---
 ```mermaid
 flowchart TB
     subgraph Internet
@@ -141,3 +157,12 @@ flowchart TB
 - **RDS** : `db.t3.medium` staging, reserved instances en prod
 - **CloudFront** : cache des assets statiques Next.js
 - **AFFINIORA** : scale-to-zero impossible (cold start modèles ~2 min) — minimum 1 tâche
+
+## Documentation & dépôts
+
+| Ressource | Emplacement |
+|-----------|-------------|
+| Terraform + scripts | [github.com/AFROMIA/.github](https://github.com/AFROMIA/.github/tree/main/docs/infra) |
+| Workflows CI/CD SAFIRI | [SAFIRI/.github/workflows](https://github.com/AFROMIA/SAFIRI/tree/main/.github/workflows) |
+| Workflows CI/CD AFFINIORA | [AFFINIORA/.github/workflows](https://github.com/AFROMIA/AFFINIORA/tree/main/.github/workflows) |
+| Recette staging | [RECETTE.md](../RECETTE.md) § 4.8 |
