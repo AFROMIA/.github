@@ -1,5 +1,7 @@
 # AFROMIA — Pipeline DevOps
 
+> **Gouvernance** : [Charte de fondation](../CHARTE_FONDATION.md) — dépôts indépendants, APIs versionnées, une couche IA (AFFINIORA).
+
 ## Vue d'ensemble
 
 L'écosystème AFROMIA utilise **deux dépôts Git indépendants** avec des pipelines CI/CD séparés mais coordonnés sur la même infrastructure AWS.

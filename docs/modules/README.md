@@ -4,7 +4,7 @@ Index des fiches par domaine pour travailler **module par module**.
 
 Chaque fiche contient : vision, état réel, **solution proposée**, **compétences requises**, fichiers clés.
 
-**Documents principaux** : [VISION](../VISION.md) · [SPEC](../SPECIFICATION_FONCTIONNELLE.md) · [État d'avancement](../ETAT_AVANCEMENT.md) · [Recette](../RECETTE.md)
+**Documents principaux** : [CHARTE](../CHARTE_FONDATION.md) · [VISION](../VISION.md) · [SPEC](../SPECIFICATION_FONCTIONNELLE.md) · [État d'avancement](../ETAT_AVANCEMENT.md) · [Recette](../RECETTE.md)
 
 ---
 

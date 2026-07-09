@@ -7,7 +7,9 @@
 
 ## Vision
 
-Expérience premium chaleureuse : thèmes clair/sombre, design épuré, responsive, logo mis en valeur, barres compactes, loaders romantiques, confettis match, micro-copy plaisante.
+Expérience premium chaleureuse : thèmes clair/sombre, design épuré, responsive, **logos AFROMIA + SAFIRI** en navigation (`BrandLockup`), barres compactes, loaders romantiques, confettis match, micro-copy plaisante.
+
+**Assets** : `SAFIRI/apps/frontend/public/brand/logo.jpeg` (SAFIRI) · `afromia_logo.png` (AFROMIA) · [Charte](../CHARTE_FONDATION.md#identité-visuelle)
 
 ## État réel
 
@@ -16,6 +18,7 @@ Expérience premium chaleureuse : thèmes clair/sombre, design épuré, responsi
 | Thèmes clair / sombre / système | ✅ |
 | Lisibilité dark mode | ✅ |
 | Design épuré + responsive | ✅ |
+| Logo dual AFROMIA + SAFIRI (nav) | ✅ |
 | Logo +30 %, ombre portée | ✅ |
 | Barres navigation compactes | ✅ |
 | Loaders proverbes africains | ✅ |
@@ -26,7 +29,7 @@ Expérience premium chaleureuse : thèmes clair/sombre, design épuré, responsi
 
 ## Recette
 
-- Validation visuelle Sarielle — voir [RECETTE.md](../RECETTE.md)
+- Validation visuelle Promoteur — voir [RECETTE.md](../RECETTE.md)
 - 1 test Vitest tokens (trivial)
 
 ## Actions prioritaires

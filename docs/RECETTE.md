@@ -25,7 +25,7 @@
 
 ```
         ┌─────────────────┐
-        │ Recette manuelle │  Sarielle (PO) — chaque module
+        │ Recette manuelle │  Promoteur (Bruce SIANI) — chaque module
         │ (checklist)      │  avant sign-off staging
         ├─────────────────┤
         │ E2E Playwright   │  Parcours critiques (objectif S7)
@@ -42,7 +42,7 @@
 
 | Rôle | Responsabilité |
 |------|----------------|
-| **Sarielle (PO)** | Recette fonctionnelle, sign-off par module |
+| **Promoteur** | Recette fonctionnelle, sign-off par module |
 | **Lead Dev** | Tests auto, corrections bugs P0/P1 |
 
 ---

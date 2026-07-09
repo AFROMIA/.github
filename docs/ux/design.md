@@ -1,18 +1,33 @@
 # AFROMIA / SAFIRI — DESIGN SYSTEM & CREATIVE DIRECTION
 
+> Aligné sur la [Charte de fondation v1.0](../CHARTE_FONDATION.md) · Devise : *Construire aujourd'hui le numérique de l'Afrique de demain.*
+
 # BRAND IDENTITY
 
 ## Company
 
-AFROMIA
+**AFROMIA** — infrastructure numérique panafricaine
+
+- Logo : `SAFIRI/apps/frontend/public/brand/afromia_logo.png`
+- Doc : `docs/assets/brand/logo_afromia.png`
 
 ## Product
 
-SAFIRI
+**SAFIRI Connect** — plateforme panafricaine de connexions intelligentes
+
+- Logo : `SAFIRI/apps/frontend/public/brand/logo.jpeg`
+- Doc : `docs/assets/brand/logo_safiri.jpeg`
+
+## Intelligence (écosystème)
+
+| Entité | Rôle visuel |
+|--------|-------------|
+| **AFFINIORA** | Moteur cognitif — jamais le visage principal |
+| **Sarielle** | Compagnon personnel — présence humaine, coach |
 
 ## Positioning
 
-Premium African futuristic lifestyle and AI-powered matchmaking platform.
+Premium African futuristic lifestyle platform with intelligent connections — not only matchmaking.
 
 The platform must feel:
 
@@ -305,8 +320,8 @@ The navbar must feel:
 
 LEFT:
 
-* AFROMIA logo
-* SAFIRI branding
+* AFROMIA logo (`/brand/afromia_logo.png`)
+* SAFIRI logo (`/brand/logo.jpeg`)
 
 CENTER:
 

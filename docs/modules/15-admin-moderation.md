@@ -7,7 +7,7 @@
 
 ## Vision
 
-Backoffice pour Sarielle (CEO) : KPI, utilisateurs, signalements, vérif vidéo, utilisateurs en ligne, CMS, test Affiniora, messages ciblés.
+Backoffice pour le Promoteur (Bruce SIANI) : KPI, utilisateurs, signalements, vérif vidéo, utilisateurs en ligne, CMS, test Affiniora, messages ciblés.
 
 ## État réel
 

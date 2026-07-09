@@ -2,7 +2,9 @@
 
 > **Démarrage** : [Guide développeur](./README.md) · **Cloud** : [ARCHITECTURE_CLOUD](./infra/ARCHITECTURE_CLOUD.md)
 
-**Version** : 2.1 · **Date** : 29 juin 2026
+**Version** : 3.0 · **Date** : 9 juillet 2026
+
+> **Référence fondateur** : [Charte de fondation](./CHARTE_FONDATION.md)
 
 ---
 
@@ -38,9 +40,20 @@ L'écosystème est réparti sur **trois dépôts GitHub indépendants** — sour
 
 **Principe** : pas de dépendance de code entre SAFIRI et AFFINIORA — uniquement **REST** (+ WebSocket dans SAFIRI pour le temps réel).
 
----
+## Écosystème (charte v1.0)
 
-## SAFIRI
+| Couche | Composants |
+|--------|------------|
+| **Société** | AFROMIA — vision, infrastructure, Identity, Wallet |
+| **Produit phare** | SAFIRI Connect — porte d'entrée |
+| **Intelligence** | AFFINIORA (cerveau) + Sarielle (visage / compagnon personnel) |
+| **Fondations futures** | Afromia Identity (SSO), Afromia Wallet, Opportunity Graph |
+
+**Décisions irréversibles** : une identité · une couche IA (AFFINIORA) · APIs versionnées · données utilisateur · pas de fragmentation.
+
+Détail : [CHARTE_FONDATION.md](./CHARTE_FONDATION.md)
+
+---
 
 Monorepo npm (Turborepo) :
 

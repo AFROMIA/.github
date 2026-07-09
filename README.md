@@ -16,6 +16,7 @@ Documentation, scripts d'orchestration et état d'avancement de l'écosystème *
 
 | Document | Description |
 |----------|-------------|
+| [**Charte de fondation**](./docs/CHARTE_FONDATION.md) | Vision, rôles écosystème, gouvernance, identité visuelle |
 | [**État d'avancement**](./docs/ETAT_AVANCEMENT.md) | Vérité technique : statuts, bloqueurs, **solutions & compétences** |
 | [Fiches modules](./docs/modules/README.md) | 22 modules — vision, état, actions |
 | [Guide développeur](./docs/README.md) | Installation, URLs, utilisation SAFIRI/AFFINIORA |

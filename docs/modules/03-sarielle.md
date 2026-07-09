@@ -8,7 +8,9 @@
 
 ## Vision
 
-**Sarielle** est l'agent conversationnel grand public d'AFROMIA. Première fonction : aide à la navigation du site. Accessible sur homepage et pages info, repliable, avec choix de modèle. Pour utilisateurs connectés : accompagnement personnalisé (si consentement IA).
+**Sarielle** est le **compagnon numérique personnel** d'AFROMIA — interface humaine d'AFFINIORA. Première fonction : aide à la navigation. Accessible sur homepage et pages info, repliable, avec choix de modèle. Pour utilisateurs connectés : accompagnement personnalisé (coach relationnel/pro, mémoire de vie avec consentement).
+
+> Rôle écosystème : [Charte de fondation](../CHARTE_FONDATION.md#les-personnalités-de-lécosystème)
 
 ## Exigences clés
 

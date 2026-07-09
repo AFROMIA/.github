@@ -529,4 +529,4 @@ Login admin → Dashboard KPI → Notifications internes
 
 ---
 
-*Spécification maintenue par Sarielle (produit) et Lead Dev (technique). État réel : [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md).*
+*Spécification maintenue par le Promoteur (produit) et Lead Dev (technique). Référence fondateur : [CHARTE_FONDATION.md](./CHARTE_FONDATION.md). État réel : [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md).*

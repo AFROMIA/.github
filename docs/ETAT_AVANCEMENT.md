@@ -110,6 +110,7 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 
 | Besoin | Ressource Git |
 |--------|---------------|
+| Comprendre la vision & les rôles | [CHARTE_FONDATION.md](./CHARTE_FONDATION.md) |
 | Choisir un chantier | [modules/](./modules/README.md) + tableau ci-dessus |
 | Setup local | [README.md](./README.md) — clone 3 dépôts |
 | Déployer | [infra/README.md](./infra/README.md) |

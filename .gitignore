@@ -81,4 +81,5 @@ afromia-dev-agent_credentials.csv
 _remote-github-tmp/
 *.pdf
 docs/**/*.pdf
+!docs/Charte_Fondation_AFROMIA.pdf
 scripts/init-*.ps1

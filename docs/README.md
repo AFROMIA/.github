@@ -1,8 +1,8 @@
 # AFROMIA — Guide développeur
 
-Documentation centrale de l'écosystème **SAFIRI** + **AFFINIORA**, hébergée sur le dépôt informationnel [github.com/AFROMIA/.github](https://github.com/AFROMIA/.github).
+Documentation centrale de l'écosystème **SAFIRI Connect** + **AFFINIORA**, hébergée sur le dépôt informationnel [github.com/AFROMIA/.github](https://github.com/AFROMIA/.github).
 
-> **Principe** : toute la doc, les scripts d'orchestration et les guides de déploiement vivent sur Git — aucun chemin ni secret ne dépend d'une machine physique. Il suffit des accès GitHub + AWS (si déploiement).
+> **Principe fondateur** : lire d'abord la [Charte de fondation](./CHARTE_FONDATION.md) — vision, rôles des entités (AFROMIA · SAFIRI · AFFINIORA · Sarielle), décisions irréversibles.
 
 | Produit | Dépôt | Interface dev |
 |---------|-------|---------------|
@@ -22,7 +22,7 @@ Les deux services applicatifs communiquent **uniquement par API REST**. SAFIRI a
 |-------|-----------|-------------|
 | GitHub org [AFROMIA](https://github.com/AFROMIA) | Clone SAFIRI, AFFINIORA, `.github` | Admin org |
 | (Optionnel) AWS `afromia-dev-agent` | Déploiement staging | Admin infra |
-| (Optionnel) Stripe/Campay sandbox | Paiements | PO / Lead Dev |
+| (Optionnel) Stripe/Campay sandbox | Paiements | Promoteur / Lead Dev |
 
 ### 2. Cloner les dépôts (structure recommandée)
 
@@ -51,7 +51,7 @@ Les scripts d'orchestration sont dans `.github/docs/scripts/` et supposent **SAF
 | Backend API | SAFIRI | [SAFIRI docs](https://github.com/AFROMIA/SAFIRI/tree/main/docs) |
 | Moteur IA / Sarielle | AFFINIORA | [CONTRACT_V2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md) |
 | Infra / déploiement | `.github` | [infra/README.md](./infra/README.md) |
-| Vision / spec produit | `.github` | [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) |
+| Vision / spec produit | `.github` | [CHARTE](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) |
 
 Chaque module (01–22) indique **état réel**, **solution proposée** et **compétences requises** dans [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md).
 
@@ -211,6 +211,7 @@ cd AFFINIORA/services/ai-engine && python -m pytest tests/ -v
 
 | Document | Contenu |
 |----------|---------|
+| [**Charte de fondation**](./CHARTE_FONDATION.md) | Vision, rôles, gouvernance, logos, workflow doc |
 | [**État d'avancement**](./ETAT_AVANCEMENT.md) | Statuts, solutions, compétences — **v2.3** |
 | [Fiches modules](./modules/README.md) | 22 modules |
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Écosystème 3 dépôts + cloud |

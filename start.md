@@ -1,6 +1,8 @@
 # AFROMIA — Démarrage local
 
-Guide pour lancer **SAFIRI** (app de rencontre) et **AFFINIORA** (moteur IA) en développement.
+Guide pour lancer **SAFIRI Connect** (app) et **AFFINIORA** (moteur cognitif) en développement.
+
+> Vision & rôles : [Charte de fondation](docs/CHARTE_FONDATION.md)
 
 | Produit | URL dev | Dossier |
 |---------|---------|---------|

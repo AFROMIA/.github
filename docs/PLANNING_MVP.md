@@ -4,7 +4,7 @@
 **Date** : 29 juin 2026  
 **Objectif production** : **15 août 2026**  
 
-**Documents liés** : [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) · [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md) · [Infra AWS](./infra/README.md)
+**Documents liés** : [**Charte de fondation**](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) · [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md) · [Infra AWS](./infra/README.md)
 
 **Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [`.github`](https://github.com/AFROMIA/.github)
 
@@ -44,23 +44,23 @@ Livrer le **MVP v1 full spec** de SAFIRI + AFFINIORA en production mi-août 2026
 
 ### Binôme fondateur
 
-| | **Sarielle — CEO & Product Owner** | **Lead Dev — Full Stack & Prompt Engineering** |
-|---|-----------------------------------|--------------------------------------------------|
-| **Mission** | Porter la vision, prioriser, valider le produit | Construire et déployer la stack technique |
+| | **Bruce SIANI — Promoteur & fondateur** | **Lead Dev — Full Stack & Prompt Engineering** |
+|---|------------------------------------------|--------------------------------------------------|
+| **Mission** | Porter la vision (Founder Book), prioriser, valider le produit | Construire et déployer la stack technique |
 | **Produit** | Roadmap, user stories, priorisation backlog | Estimation technique, implémentation |
 | **Design & branding** | Direction créative, charte, copywriting, assets | Intégration UI, design system |
 | **Marketing** | Stratégie GTM, réseaux sociaux, landing copy | SEO technique, perf, analytics |
-| **Documentation** | Vision, specs, contenus CMS/légaux | Docs `.github` sur Git, onboarding contributeurs |
+| **Documentation** | Charte, vision, specs, contenus CMS/légaux | Docs `.github` sur Git, onboarding contributeurs |
 | **Tests** | Recette fonctionnelle, parcours utilisateur | Tests auto (pytest, Playwright), fixes |
 | **Gestion de projet** | Planning, suivi sprint, communication | Exécution technique, démo fin de sprint |
-| **IA / prompts** | Validation qualité suggestions & UX IA | Prompts Affiniora, tuning scoring, Celery |
+| **IA / prompts** | Validation qualité suggestions & UX IA (via agent Sarielle) | Prompts Affiniora, tuning scoring, Celery |
 
 ### Principe de collaboration
 
-> **Sarielle décide quoi et pourquoi. Lead Dev décide comment. Les deux valident le résultat.**
+> **Le Promoteur décide quoi et pourquoi. Le Lead Dev décide comment. Les deux valident le résultat.**
 
-- Sarielle teste **chaque fin de sprint** sur un environnement stable (staging).
-- Lead Dev corrige les bugs bloquants en priorité sur retour Sarielle.
+- Bruce SIANI teste **chaque fin de sprint** sur un environnement stable (staging).
+- Lead Dev corrige les bugs bloquants en priorité sur retour du Promoteur.
 - Pas de nouvelle feature majeure après le **21 juillet 2026** (freeze scope).
 
 ### Contributeurs externes
@@ -78,7 +78,7 @@ Tout nouveau dev peut rejoindre un chantier via :
 
 Légende : **R** = Responsible · **A** = Accountable · **C** = Consulted · **I** = Informed
 
-| Activité | Sarielle | Lead Dev |
+| Activité | Promoteur | Lead Dev |
 |----------|----------|----------|
 | Vision & positionnement | **A/R** | C |
 | Spécifications fonctionnelles | **A/R** | C |
@@ -133,7 +133,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | **6 juillet 2026** | Fin recette S5 — IAM OK, staging déployé ou plan B documenté |
 | **20 juillet 2026** | Stripe/PayPal/LiveKit/VAPID configurés |
 | **21 juillet 2026** | **Freeze scope** — plus de nouvelles features |
-| **3 août 2026** | Staging validé par Sarielle (sign-off recette) |
+| **3 août 2026** | Staging validé par Bruce SIANI (sign-off recette) |
 | **10 août 2026** | Soft launch interne / beta fermée |
 | **15 août 2026** | **Launch public MVP v1** |
 
@@ -152,7 +152,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Filtres Discover (distance PostGIS, langue) | Lead Dev | `DiscoverFilterPanel` |
 | UI breakdown score sur cartes | Lead Dev | `SwipeCardStack` |
 | Suggestions IA chat | Lead Dev | `ChatComposer` |
-| Recette parcours quiz → discover | Sarielle | Rapport bugs |
+| Recette parcours quiz → discover | Bruce SIANI | Rapport bugs |
 
 ---
 
@@ -167,8 +167,8 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Blocage / signalement | Lead Dev | Profil public |
 | Admin modération + vérif vidéo | Lead Dev | Panel admin |
 | Likes limités, visiteurs, boost | Lead Dev | Premium features |
-| Rédaction copy confiance / sécurité | Sarielle | Textes UI + CMS |
-| Test parcours signalement | Sarielle | Validation workflow |
+| Rédaction copy confiance / sécurité | Bruce SIANI | Textes UI + CMS |
+| Test parcours signalement | Bruce SIANI | Validation workflow |
 
 ---
 
@@ -183,8 +183,8 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Messages image S3 | Lead Dev | Upload chat |
 | Push notifications PWA | Lead Dev | Backend push |
 | PayPal abonnements | Lead Dev | `/premium` |
-| Copy premium & pricing | Sarielle | Page `/premium` |
-| Test appel vidéo 2 comptes | Sarielle | Recette |
+| Copy premium & pricing | Bruce SIANI | Page `/premium` |
+| Test appel vidéo 2 comptes | Bruce SIANI | Recette |
 
 ---
 
@@ -199,14 +199,14 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Boutique cadeaux | Lead Dev | `/shop` |
 | KPI dashboard admin | Lead Dev | `/admin` |
 | E2E smoke Playwright | Lead Dev | `mvp.spec.ts` |
-| Contenu blog initial (3 articles) | Sarielle | CMS publié |
-| Pages légales brouillon | Sarielle | Slugs CMS |
+| Contenu blog initial (3 articles) | Bruce SIANI | CMS publié |
+| Pages légales brouillon | Bruce SIANI | Slugs CMS |
 
 ---
 
 ### Sprint 5 — Stabilisation & recette 🔵 (23 juin – 6 juil.)
 
-**Objectif** : Produit testable de bout en bout par Sarielle sans blocage.
+**Objectif** : Produit testable de bout en bout par Bruce SIANI sans blocage.
 
 #### Lead Dev
 
@@ -219,7 +219,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Corriger régressions Discover / chat WS | P0 | 2 j |
 | Seed enrichi (channels, wallet) | P2 | 1 j |
 
-#### Sarielle
+#### Promoteur
 
 | Tâche | Priorité | Estimation |
 |-------|----------|------------|
@@ -229,7 +229,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Validation copy onboarding + discover | P1 | 1 j |
 | Brief branding assets launch | P1 | 1 j |
 
-**Definition of Done S5** : Sarielle complète le parcours inscription → match → chat sans bug bloquant.
+**Definition of Done S5** : Bruce SIANI complète le parcours inscription → match → chat sans bug bloquant.
 
 ---
 
@@ -249,7 +249,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Rate limiting + headers sécurité | P1 |
 | Review secrets / .env prod | P0 |
 
-#### Sarielle
+#### Promoteur
 
 | Tâche | Priorité |
 |-------|----------|
@@ -278,7 +278,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Backup DB + plan rollback | P0 |
 | **Freeze scope — bugs only** | — |
 
-#### Sarielle
+#### Promoteur
 
 | Tâche | Priorité |
 |-------|----------|
@@ -288,7 +288,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | 5 assets marketing (visuels, posts) | P1 |
 | Plan beta fermée (50 users) | P1 |
 
-**Definition of Done S7** : Sign-off Sarielle + E2E green + staging stable 48h.
+**Definition of Done S7** : Sign-off Bruce SIANI + E2E green + staging stable 48h.
 
 ---
 
@@ -305,7 +305,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Monitoring alertes actives | 7 août |
 | Hotfix buffer | 8–14 août |
 
-#### Sarielle
+#### Promoteur
 
 | Tâche | Date cible |
 |-------|------------|
@@ -314,7 +314,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | Communiqué launch | 15 août |
 | Modération active J+1 à J+7 | 15–22 août |
 
-**Definition of Done S8** : App accessible publiquement, premium achetable, support Sarielle opérationnel.
+**Definition of Done S8** : App accessible publiquement, premium achetable, agent Sarielle opérationnel.
 
 ---
 
@@ -325,7 +325,7 @@ Août    │ S7 ████ │ S8 ████████ │ 🚀 15 août L
 | M1 | Code MVP feature-complete | 19 juin 2026 | ✅ Tous modules SPEC implémentés |
 | M2 | Recette interne OK | 6 juil. 2026 | 0 bug P0 ouvert |
 | M3 | Services tiers configurés | 20 juil. 2026 | Paiement + email test OK |
-| M4 | Sign-off staging | 3 août 2026 | Sarielle signe recette |
+| M4 | Sign-off staging | 3 août 2026 | Bruce SIANI signe recette |
 | M5 | Beta fermée | 10 août 2026 | 50 users, feedback collecté |
 | M6 | **Launch public** | **15 août 2026** | Prod stable, marketing actif |
 
@@ -337,15 +337,15 @@ Tâches continues sur plusieurs sprints :
 
 | Item | Owner | Sprint(s) |
 |------|-------|-----------|
-| Mise à jour SPEC + VISION | Sarielle | S5–S8 |
+| Mise à jour SPEC + VISION | Bruce SIANI | S5–S8 |
 | Prompt tuning Affiniora (suggestions, scoring) | Lead Dev | S5–S6 |
-| Contenu CMS (blog, FAQ, legal) | Sarielle | S5–S7 |
+| Contenu CMS (blog, FAQ, legal) | Bruce SIANI | S5–S7 |
 | Tests E2E extension | Lead Dev | S5–S7 |
-| Branding assets (logo, OG images, favicon) | Sarielle | S5–S6 |
+| Branding assets (logo, OG images, favicon) | Bruce SIANI | S5–S6 |
 | Analytics (Plausible/GA) | Lead Dev | S7 |
 | Terraform / infra staging | Lead Dev | S5–S6 |
-| Documentation `.github` à jour | Lead Dev + Sarielle | S5 (continu) |
-| Onboarding contributeurs GitHub | Sarielle | S5 |
+| Documentation `.github` à jour | Lead Dev + Bruce SIANI | S5 (continu) |
+| Onboarding contributeurs GitHub | Bruce SIANI | S5 |
 
 ---
 
@@ -355,7 +355,7 @@ Tâches continues sur plusieurs sprints :
 
 ```
         ┌─────────────┐
-        │  Recette    │  Sarielle — parcours manuels
+        │  Recette    │  Bruce SIANI — parcours manuels
         │  manuelle   │  chaque fin de sprint
         ├─────────────┤
         │  E2E        │  Lead Dev — Playwright
@@ -365,7 +365,7 @@ Tâches continues sur plusieurs sprints :
         └─────────────┘
 ```
 
-### Parcours de recette Sarielle (checklist)
+### Parcours de recette Promoteur (checklist)
 
 - [ ] Inscription email + onboarding complet
 - [ ] Quiz 12 questions → page personnalité (résultat IA)
@@ -401,7 +401,7 @@ Tâches continues sur plusieurs sprints :
 - [ ] Sentry / monitoring
 - [ ] Rate limiting actif
 
-### Produit & legal (Sarielle)
+### Produit & legal (Promoteur)
 
 - [ ] CGU publiées et linkées footer
 - [ ] Privacy Policy publiée
@@ -411,7 +411,7 @@ Tâches continues sur plusieurs sprints :
 - [ ] Plan modération J+7
 - [ ] FAQ publique
 
-### Marketing (Sarielle)
+### Marketing (Promoteur)
 
 - [ ] Identité visuelle cohérente (favicon, OG)
 - [ ] Comptes réseaux sociaux prêts
@@ -428,7 +428,7 @@ Tâches continues sur plusieurs sprints :
 ```markdown
 ## Semaine du __/__/2026
 
-### Sarielle
+### Promoteur (Bruce SIANI)
 - Fait :
 - En cours :
 - Bloqué :
@@ -451,7 +451,7 @@ Tâches continues sur plusieurs sprints :
 
 ## Synthèse charge estimée
 
-| Période | Lead Dev | Sarielle |
+| Période | Lead Dev | Bruce SIANI |
 |---------|----------|----------|
 | S5 (2 sem.) | ~60 h dev/fix | ~25 h recette + doc |
 | S6 (2 sem.) | ~50 h config + sécu | ~20 h legal + contenu |

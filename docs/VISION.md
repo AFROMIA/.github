@@ -1,11 +1,11 @@
 # AFROMIA — Document de vision produit
 
-**Version** : 2.1  
-**Date** : 29 juin 2026  
+**Version** : 3.0  
+**Date** : 9 juillet 2026  
 **Statut** : MVP v1 — stabilisation, déploiement AWS staging, recette  
 **Cible production** : mi-août 2026  
 
-**Documents liés** : [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [État](./ETAT_AVANCEMENT.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md) · [Planning](./PLANNING_MVP.md) · [Infra AWS](./infra/README.md)
+**Documents liés** : [**Charte de fondation**](./CHARTE_FONDATION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [État](./ETAT_AVANCEMENT.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md) · [Planning](./PLANNING_MVP.md) · [Infra AWS](./infra/README.md)
 
 **Dépôts Git** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Docs `.github`](https://github.com/AFROMIA/.github)
 
@@ -31,15 +31,16 @@
 
 ## 1. Résumé exécutif
 
-**AFROMIA** est la société éditrice d'un écosystème technologique premium centré sur les rencontres, la confiance et l'intelligence émotionnelle, avec une identité **africaine moderne, internationale et futuriste**.
+**AFROMIA** est une **plateforme d'infrastructure numérique panafricaine** : vision, identité, gouvernance et fondations technologiques pour un écosystème de produits interconnectés, avec une identité **africaine moderne, internationale et futuriste**.
 
-Trois entités nommées distinctement :
+Quatre entités nommées distinctement (voir [Charte de fondation](./CHARTE_FONDATION.md)) :
 
 | Nom | Rôle |
 |-----|------|
-| **SAFIRI** | Application de matchmaking (PWA) — le produit utilisateur |
-| **AFFINIORA** | Moteur d'IA self-hosted — scoring, personnalité, anti-fake |
-| **Sarielle** | Agent conversationnel — navigation, accompagnement, relation client |
+| **AFROMIA** | Société — vision, infrastructure, identité unique, wallet |
+| **SAFIRI Connect** | Porte d'entrée — connexions intelligentes (personnes, communautés, opportunités) |
+| **AFFINIORA** | Moteur cognitif — affinités, recommandations, orchestration (le cerveau) |
+| **Sarielle** | Compagnon numérique personnel — accompagnement, coaching, interface humaine d'Affiniora |
 
 Le MVP v1 combine swipe, messagerie temps réel, homepage CMS multilingue, wizard d'inscription, fonctionnalités premium, live, boutique cadeaux et backoffice admin.
 
@@ -53,20 +54,26 @@ La phase en cours : **stabilisation**, **déploiement staging AWS**, **recette**
 
 ### Mission
 
-Connecter des personnes authentiques à travers une plateforme de rencontres premium, intelligente et sécurisée, qui célèbre l'excellence africaine contemporaine et la sophistication émotionnelle.
+Créer un **écosystème numérique intégré** qui simplifie la vie des particuliers, des entrepreneurs, des entreprises et des institutions africaines grâce à des solutions innovantes, accessibles et interconnectées.
 
 ### Vision (3–5 ans)
 
-Devenir la référence internationale du **matchmaking premium africain augmenté par l'IA**, reconnu pour :
+> *« Construire l'infrastructure numérique qui permettra à chaque Africain de se connecter, créer, apprendre, entreprendre, commercer, investir et prospérer, grâce à des technologies conçues par l'Afrique et pour l'Afrique. »*
 
-- la **qualité des matchs** (compatibilité réelle via AFFINIORA, pas seulement l'apparence) ;
-- la **confiance** (profils vérifiés, modération proactive, transparence IA) ;
+**Devise** : *Construire aujourd'hui le numérique de l'Afrique de demain.*
+
+Devenir une **référence internationale d'innovation numérique africaine**, reconnue pour :
+
+- la **qualité des connexions** (Opportunity Graph + AFFINIORA, pas seulement l'apparence) ;
+- la **confiance** (profils vérifiés, Trust Engine, transparence IA) ;
 - l'**expérience utilisateur** au niveau des meilleures apps lifestyle ;
-- un **écosystème IA propriétaire** réutilisable sur d'autres verticales relationnelles.
+- un **écosystème IA propriétaire** (AFFINIORA + Sarielle) réutilisable sur d'autres verticales.
 
-### Énoncé vision produit
+### Énoncé vision produit (SAFIRI Connect)
 
 > *« Un écosystème relationnel premium, chaleureux et intelligent, qui connecte le monde à l'Afrique moderne — une **relation enrichissante**. »*
+
+SAFIRI n'est ni un réseau social classique ni un simple site de rencontre : c'est la **plateforme panafricaine de connexions intelligentes** (l'amour n'est qu'un cas d'usage).
 
 ---
 
@@ -74,33 +81,38 @@ Devenir la référence internationale du **matchmaking premium africain augment�
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        AFROMIA (société)                        │
-│         Vision · Branding · Gestion de projet · Go-to-market    │
+│                     AFROMIA (société)                           │
+│     Vision · Infrastructure · Identity · Wallet · Gouvernance   │
 └────────────────────────────┬────────────────────────────────────┘
                              │
-         ┌───────────────────┴───────────────────┐
-         ▼                                       ▼
-┌─────────────────────┐               ┌─────────────────────┐
-│       SAFIRI        │    REST API   │     AFFINIORA       │
-│  App de rencontre   │◄─────────────►│   Moteur IA         │
-│  Next.js + FastAPI  │               │   FastAPI + HF      │
-│  + Homepage CMS     │               │   + Agent Sarielle  │
-└─────────────────────┘               └─────────────────────┘
-         │                                       │
-         │  Postgres · Redis · MinIO · Celery    │  PyTorch · Redis cache
-         └───────────────────┬───────────────────┘
+         ┌───────────────────┼───────────────────┐
+         ▼                   ▼                   ▼
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│  SAFIRI Connect │  │   AFFINIORA     │  │ Afromia Identity│
+│  Porte d'entrée │◄►│  Moteur cognitif│  │  (SSO futur)    │
+│  Next.js+FastAPI│  │  FastAPI + HF   │  └─────────────────┘
+└────────┬────────┘  └────────┬────────┘
+         │                    │
+         │                    ▼
+         │             ┌─────────────┐
+         └────────────►│  Sarielle   │  compagnon personnel (gratuit)
+                       │  (visage IA)│
+                       └─────────────┘
+         │  Postgres · Redis · MinIO · Celery
+         └───────────────────┬───────────────────
                              ▼
                     Infrastructure cloud (AWS / Vercel)
 ```
 
 | Composant | Rôle | Interface |
 |-----------|------|-----------|
-| **SAFIRI** | App principale (PWA), homepage CMS, wizard, discover, chat, premium | Web mobile-first |
-| **AFFINIORA** | Scoring, personnalité, anti-fake, suggestions | API REST |
-| **Sarielle** | Agent conversationnel (navigation, accompagnement) | `/sarielle`, hub flottant |
+| **AFROMIA** | Société, marque, infrastructure, docs | [Charte](./CHARTE_FONDATION.md) |
+| **SAFIRI Connect** | App principale (PWA), discover, chat, premium, channels | Web mobile-first |
+| **AFFINIORA** | Scoring, personnalité, anti-fake, orchestration | API REST |
+| **Sarielle** | Coach personnel, navigation, accompagnement relationnel/pro | `/sarielle`, hub flottant |
 | **docs/** | Documentation, scripts dev, Terraform AWS, recette | Équipe — [github.com/AFROMIA/.github](https://github.com/AFROMIA/.github) |
 
-**Principe** : dépôts applicatifs indépendants, **REST + WebSocket**, **IA 100 % self-hosted** au MVP.
+**Principe** : dépôts applicatifs indépendants, **REST + WebSocket**, communication inter-produits par **API versionnées**, **IA 100 % self-hosted** au MVP.
 
 ---
 
@@ -143,9 +155,9 @@ Devenir la référence internationale du **matchmaking premium africain augment�
 
 **Kwame, 28 ans** — Développeur (Accra). Teste IA, live, premium. Attend transparence et peu de fake profiles.
 
-**Sarielle (interne)** — CEO / Product Owner. Vision, branding, recette, documentation.
+**Bruce SIANI** — Promoteur & fondateur. Vision, Founder Book, priorisation, branding, recette.
 
-**Lead Dev (interne)** — Full Stack. SAFIRI, AFFINIORA, infra, tests.
+**Lead Dev** — Full Stack. SAFIRI, AFFINIORA, infra, tests, déploiement.
 
 ---
 
@@ -217,7 +229,7 @@ Homepage CMS → Getting Started (wizard) → Sarielle (option)
 - Configuration services tiers
 - Contenu légal + CMS homepage publié
 - E2E parcours complet Playwright
-- Sign-off staging Sarielle
+- Sign-off staging Promoteur
 
 ---
 
@@ -272,12 +284,12 @@ Homepage CMS → Getting Started (wizard) → Sarielle (option)
 
 | Rôle | Responsable | Périmètre |
 |------|-------------|-----------|
-| **CEO & PO** | Sarielle | Vision, priorisation, branding, recette, docs produit |
-| **Lead Dev** | Lead Dev | Architecture, implémentation, tests auto, déploiement |
+| **Promoteur & fondateur** | Bruce SIANI | Vision, Founder Book, priorisation, branding, recette, docs produit |
+| **Lead Dev** | Équipe technique | Architecture, implémentation, tests auto, déploiement |
 
-> **Sarielle décide quoi et pourquoi. Lead Dev décide comment. Les deux valident le résultat.**
+> **Le Promoteur décide quoi et pourquoi. Le Lead Dev décide comment. Les deux valident le résultat.**
 
-Documents opérationnels : [PLANNING_MVP.md](./PLANNING_MVP.md) · [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md) · [RECETTE.md](./RECETTE.md)
+Documents opérationnels : [CHARTE_FONDATION.md](./CHARTE_FONDATION.md) · [PLANNING_MVP.md](./PLANNING_MVP.md) · [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md) · [RECETTE.md](./RECETTE.md)
 
 ---
 
@@ -289,7 +301,7 @@ Documents opérationnels : [PLANNING_MVP.md](./PLANNING_MVP.md) · [ETAT_AVANCEM
 4. **IA transparente** — Consentement opt-in ; pas de faux scores.
 5. **Self-hosted IA** — Souveraineté des données au MVP.
 6. **Travailler module par module** — Fiches [docs/modules/](./modules/README.md).
-7. **Tester tôt** — Recette Sarielle + E2E avant staging.
+7. **Tester tôt** — Recette Promoteur + E2E avant staging.
 8. **Construire ensemble** — Contributeurs via GitHub ; doc à jour sur `.github`.
 
 ---
