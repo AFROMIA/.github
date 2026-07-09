@@ -1,9 +1,9 @@
 # AFROMIA / SAFIRI — Plan de recette & couverture tests
 
-**Version** : 2.1  
-**Date** : 29 juin 2026  
+**Version** : 2.2  
+**Date** : 9 juillet 2026  
 
-**Documents liés** : [État d'avancement](./ETAT_AVANCEMENT.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Comptes test](./COMPTES_TEST.md) · [Modules](./modules/README.md) · [Déploiement AWS](./infra/README.md)
+**Documents liés** : [CHARTE](./CHARTE_FONDATION.md) · [État d'avancement](./ETAT_AVANCEMENT.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Comptes test](./COMPTES_TEST.md) · [Modules](./modules/README.md) · [Déploiement AWS](./infra/README.md)
 
 ---
 
@@ -172,6 +172,16 @@ Légende : ✅ = tests existants · ⬜ = non exécuté · ❌ = aucun test
 | R-P1-04 | Newsletter | Soumission → enregistrement backend | ⬜ |
 | R-P1-05 | Contact | Soumission → notification admin | ⬜ |
 | R-P1-06 | Ancres navigation | Liens ancres **uniquement** sur `/` | ⬜ |
+
+### 4.2b SAFIRI Connect — UX discover (P1)
+
+| ID | Scénario | Résultat attendu | Statut |
+|----|----------|------------------|--------|
+| R-P1-19 | Modes `/discover` | Basculer Connexions / Rencontre / Réseau sans quitter la page ; feed rechargé | ⬜ |
+| R-P1-20 | Copy Connect | Nav « Connect », titre page, wizard sans « amour authentique » | ⬜ |
+| R-P1-21 | Match modal i18n | Célébration en FR/EN, ton « connexion » | ⬜ |
+| R-P1-22 | BrandLockup | Logos AFROMIA + SAFIRI en navigation | ⬜ |
+| R-P1-23 | Mode Réseau | Filtre networking appliqué ; overlay CONNECT (pas LIKE) | ⬜ |
 
 ### 4.3 Sarielle & AFFINIORA (P1)
 

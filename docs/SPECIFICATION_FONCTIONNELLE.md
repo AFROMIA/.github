@@ -1,8 +1,8 @@
 # AFROMIA / SAFIRI — Spécification fonctionnelle MVP v1
 
-**Version** : 2.1  
-**Date** : 29 juin 2026  
-**Référence vision** : [VISION.md](./VISION.md)  
+**Version** : 2.2  
+**Date** : 9 juillet 2026  
+**Référence vision** : [VISION.md](./VISION.md) · [CHARTE](./CHARTE_FONDATION.md)  
 **État réel** : [ETAT_AVANCEMENT.md](./ETAT_AVANCEMENT.md)  
 **Recette** : [RECETTE.md](./RECETTE.md)  
 **Fiches modules** : [modules/README.md](./modules/README.md) (01–22)  
@@ -44,9 +44,9 @@
 
 Ce document décrit **toutes les fonctionnalités du MVP v1** de l'écosystème AFROMIA :
 
-- **SAFIRI** : application de rencontre (frontend Next.js 15 + backend FastAPI) — dépôt [SAFIRI](https://github.com/AFROMIA/SAFIRI)
-- **AFFINIORA** : microservice IA — dépôt [AFFINIORA](https://github.com/AFROMIA/AFFINIORA)
-- **Sarielle** : agent conversationnel intégré à SAFIRI
+- **SAFIRI Connect** : plateforme panafricaine de connexions intelligentes (frontend Next.js 15 + backend FastAPI) — dépôt [SAFIRI](https://github.com/AFROMIA/SAFIRI)
+- **AFFINIORA** : moteur cognitif — dépôt [AFFINIORA](https://github.com/AFROMIA/AFFINIORA)
+- **Sarielle** : compagnon numérique personnel (interface conversationnelle d'AFFINIORA)
 - **Documentation & infra** : dépôt [`.github`](https://github.com/AFROMIA/.github) (spec, recette, Terraform AWS, scripts)
 
 **Modules extension juin 2026** (fiches 19–22) : channels créateur, wallet Safir, badges & intentions i18n, speed dating. Voir [modules/README.md](./modules/README.md).
@@ -269,9 +269,10 @@ Login admin → Dashboard KPI → Notifications internes
 | DISC-09 | Likes reçus | Premium |
 | DISC-10 | Modale filtres | Cachée par défaut, compacte, **déplaçable** |
 | DISC-11 | Hub flottant | Onglets : filtres + Affiniora + shop |
-| DISC-12 | Célébration match | Confettis + score réel affiché |
+| DISC-12 | Célébration connexion | Confettis + score réel affiché (i18n Connect) |
+| DISC-13 | Modes contexte | Connexions / Rencontre / Réseau sur `/discover` ; filtres presets ; copy adaptée |
 
-**Pages** : `/discover`
+**Pages** : `/discover` (libellé nav : **Connect**)
 
 ---
 

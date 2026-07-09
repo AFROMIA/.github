@@ -1,10 +1,10 @@
 # AFROMIA / SAFIRI — État d'avancement réel
 
-**Version** : 2.3  
-**Date** : 29 juin 2026  
+**Version** : 2.4  
+**Date** : 9 juillet 2026  
 **Statut** : Document de vérité technique — à mettre à jour à chaque sprint  
 
-**Documents liés** : [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
+**Documents liés** : [CHARTE](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
 
 **Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Docs `.github`](https://github.com/AFROMIA/.github) · [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
 
@@ -25,7 +25,7 @@
 
 ## 1. Synthèse exécutive
 
-> **Constat honnête (juin 2026)** : code **vaste** (35+ routes, 30+ modules API, 10 migrations récentes, Terraform 79 ressources). Sprint juin : channels, wallet, badges, intentions, speed dating, contrat IA v2, **pipeline déploiement AWS**. La doc et les scripts sont sur Git ([`.github`](https://github.com/AFROMIA/.github)) — un nouveau dev clone 3 dépôts et suit [README.md](./README.md). Recette bout-en-bout et staging AWS **non validés**.
+> **Constat honnête (juillet 2026)** : charte de fondation v1.0 versionnée sur Git. **Sprint S5b Safiri Connect** en cours : migration UX `/discover` (modes contexte Connexions / Rencontre / Réseau), copy Connect, i18n FR/EN. Code backend discover inchangé ; staging AWS **bloqué IAM** (`afromia-dev-agent` sans politiques attachées).
 
 | Indicateur | Valeur estimée | Commentaire |
 |------------|----------------|-------------|
@@ -66,7 +66,7 @@
 | Profils & onboarding | ✅ | ✅ | 🟡 | 🟡 | [04](./modules/04-profils-onboarding.md) |
 | AFFINIORA (IA v2) | ✅ | ✅ | 🟡 | 🟡 | [05](./modules/05-affiniora.md) |
 | Vérification & confiance | ✅ | ✅ | ❌ | 🟡 | [06](./modules/06-verification-confiance.md) |
-| Discover & matching | ✅ | ✅ | 🟡 | 🟡 | [07](./modules/07-discover-matching.md) |
+| Discover & matching (SAFIRI Connect) | ✅ | 🚧 | 🟡 | 🟡 | [07](./modules/07-discover-matching.md) |
 | Chat & messagerie | ✅ | ✅ | 🟡 | 🚧 | [08](./modules/08-chat-messagerie.md) |
 | Premium & paiements | ✅ | 🟡 | 🟡 | 🟡 | [09](./modules/09-premium-paiements.md) |
 | Live streaming | ✅ | ✅ | 🟡 | 🟡 | [10](./modules/10-live-streaming.md) |
@@ -76,7 +76,7 @@
 | Notifications | ✅ | ✅ | ❌ | 🔴 | [14](./modules/14-notifications.md) |
 | Admin & modération | ✅ | ✅ | 🟡 | 🟡 | [15](./modules/15-admin-moderation.md) |
 | RGPD | ✅ | ✅ | 🟡 | 🟡 | [16](./modules/16-rgpd.md) |
-| Design & UX | — | ✅ | ✅ | ✅ | [17](./modules/17-design-ui-ux.md) |
+| Design & UX (SAFIRI Connect) | — | 🟡 | 🟡 | 🟡 | [17](./modules/17-design-ui-ux.md) |
 | Infra & DevOps | ✅ | — | 🟡 | 🚧 | [18](./modules/18-infra-devops.md) |
 | **Channels créateur** | ✅ | ✅ | 🟡 | 🟡 | [19](./modules/19-channels-createur.md) |
 | **Wallet Safir** | ✅ | ✅ | 🟡 | 🟡 | [20](./modules/20-wallet-safir.md) |
@@ -101,7 +101,7 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 | **Premium checkout** | Pages `/premium/checkout`, webhooks Stripe codés. Clés Stripe vides ; `/premium/success` partiel. | 1) Stripe test mode 2) E2E checkout → rôle premium 3) Page confirmation | Stripe API, webhooks sécurisés, Next.js |
 | **Badges** | Catalogue domaine, sync service, admin panel, composants UI. Attribution auto peu testée. | 1) Règles métier documentées 2) Tests `badge_service` 3) Affichage profil public | Domain-driven design, règles métier, React |
 | **Intentions i18n** | Catalogue + sondes + 10 locales ; `IntentionProbeModal`. Traductions partiellement validées par locuteurs natifs. | 1) Revue linguistique FR/EN/AR 2) Script `merge-i18n-extensions.mjs` en CI 3) Tests pagination intentions | next-intl, i18n, UX research |
-| **Speed dating** | Orchestrateur + WS + LiveKit helpers ; room UI basique. LiveKit local requis, non documenté au onboarding. | 1) Guide LiveKit dans [start.md](../start.md) 2) Test session 2 utilisateurs seed 3) Gestion timeouts | WebSocket, LiveKit, orchestration temps réel |
+| **Migration UX Safiri Connect** | Modes contexte `/discover`, copy Connect, MatchCelebration i18n, BrandLockup | 🚧 Phase 1–2 livrées en local ; recette ⬜ | Next.js, next-intl, design system |
 | **Résilience DB/Redis** | Couche `resilience.py` + client Redis dédié ; tests unitaires. Pas de chaos testing. | 1) Simuler panne Redis en dev 2) Circuit breaker dashboard 3) Alertes Prometheus | SRE, PostgreSQL, Redis, pytest |
 | **Déploiement AWS staging** | Terraform + scripts livrés ; ECR/ECS prêts ; IAM `afromia-dev-agent` sans droits create | 1) [IAM_BLOCKER](./infra/IAM_BLOCKER.md) 2) `bootstrap-aws.ps1` 3) smoke health checks | AWS IAM, Terraform, ECS, Docker |
 | **Debug panel IA Lab** | Appels directs navigateur → AFFINIORA. Fonctionnel si service up. | 1) Variables `NEXT_PUBLIC_AFFINIORA_*` 2) Masquer en prod | Next.js, CORS, sécurité clés |

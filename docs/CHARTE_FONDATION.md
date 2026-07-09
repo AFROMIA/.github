@@ -1,6 +1,6 @@
 # AFROMIA — Charte de fondation
 
-**Version** : 1.0 · **Juillet 2026**  
+**Version** : 1.1 · **Juillet 2026** — sprint S5b Safiri Connect en cours  
 **Source** : [Charte_Fondation_AFROMIA.pdf](./Charte_Fondation_AFROMIA.pdf) (Founder Book)  
 **Promoteur** : Bruce SIANI
 
@@ -13,7 +13,7 @@
 | Marque | Fichier source (SAFIRI) | Usage |
 |--------|-------------------------|-------|
 | **AFROMIA** | `SAFIRI/apps/frontend/public/brand/afromia_logo.png` | Société, infrastructure, docs |
-| **SAFIRI** | `SAFIRI/apps/frontend/public/brand/logo.jpeg` | Produit utilisateur (app Connect) |
+| **SAFIRI** | `SAFIRI/apps/frontend/public/brand/logo.jpeg` (source) · `logo.png` (app) | Produit utilisateur (app Connect) |
 
 Assets documentation : [`docs/assets/brand/`](./assets/brand/)
 
@@ -193,6 +193,13 @@ Référence détaillée : [docs/ux/design.md](./ux/design.md)
 | Déploiement | [infra/README](./infra/README.md) · [DEVOPS_PIPELINE](./infra/DEVOPS_PIPELINE.md) |
 | Recette | [RECETTE](./RECETTE.md) — validation par le Promoteur |
 | État technique | [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md) |
+| Sprint UX Connect | [Module 07](./modules/07-discover-matching.md) · [PLANNING S5b](./PLANNING_MVP.md) |
+
+---
+
+## Sprint en cours (S5b — juillet 2026)
+
+Migration **Safiri Love → SAFIRI Connect** : modes contexte sur `/discover`, copy et i18n alignés charte, documentation v2.4. Voir [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md).
 
 ---
 

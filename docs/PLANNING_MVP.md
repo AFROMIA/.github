@@ -1,7 +1,7 @@
 # AFROMIA — Planning MVP v1
 
-**Version** : 1.1  
-**Date** : 29 juin 2026  
+**Version** : 1.2  
+**Date** : 9 juillet 2026  
 **Objectif production** : **15 août 2026**  
 
 **Documents liés** : [**Charte de fondation**](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [SPEC](./SPECIFICATION_FONCTIONNELLE.md) · [ETAT_AVANCEMENT](./ETAT_AVANCEMENT.md) · [Infra AWS](./infra/README.md)
@@ -36,7 +36,17 @@ Livrer le **MVP v1 full spec** de SAFIRI + AFFINIORA en production mi-août 2026
 - la modération et la conformité RGPD en place ;
 - une identité de marque cohérente et un plan de lancement initial.
 
-**État au 29 juin 2026** : sprints 1–4 **livrés** (code ~90 %). Sprint 5 en cours : stabilisation + **déploiement AWS staging** (Terraform plan OK, IAM à débloquer). Documentation et scripts **100 % sur Git** — prêt pour contributeurs via accès GitHub org.
+**État au 9 juillet 2026** : charte fondation sur Git (`d4df751`). **Sprint S5b Safiri Connect** (9–18 juil.) : migration UX `/discover`, docs v2.4. Sprint 5 infra : staging AWS **bloqué IAM** (utilisateur sans politique attachée).
+
+### Sprint S5b — Safiri Connect UX (9–18 juillet 2026)
+
+| Livrable | Responsable | DoD |
+|----------|-------------|-----|
+| Phase 1 copy Connect (i18n, wizard, MatchCelebration) | Lead Dev | ✅ local |
+| Phase 2 modes contexte `/discover` | Lead Dev | ✅ local · recette ⬜ |
+| Docs ETAT v2.4, SPEC/RECETTE v2.2 | Lead Dev | ✅ |
+| Recette Promoteur modes + landing | Bruce SIANI | ⬜ |
+| Push SAFIRI + déploiement staging | Lead Dev | 🚧 IAM |
 
 ---
 

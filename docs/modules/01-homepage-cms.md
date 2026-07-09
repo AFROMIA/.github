@@ -25,7 +25,7 @@ Page d'accueil premium entièrement éditable depuis le backoffice, multilingue 
 | CMS-HP-09 | Ancres navigation **uniquement** sur `/` |
 | CMS-HP-10 | Mise à jour contenu sans redémarrage serveur |
 | CMS-HP-11 | Sarielle chatbot sur homepage (langue navigateur) |
-| CMS-HP-12 | Naming : SAFIRI (app), AFFINIORA (IA), Sarielle (agent) |
+| CMS-HP-12 | Naming : **SAFIRI Connect** (app), AFROMIA (société), AFFINIORA (IA), Sarielle (compagnon) |
 
 ## État réel
 
