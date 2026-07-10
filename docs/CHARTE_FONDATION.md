@@ -4,7 +4,9 @@
 **Source** : [Charte_Fondation_AFROMIA.pdf](./Charte_Fondation_AFROMIA.pdf) (Founder Book)  
 **Promoteur** : Bruce SIANI
 
-**Documents liés** : [VISION](./VISION.md) · [ARCHITECTURE](./ARCHITECTURE.md) · [Design system](./ux/design.md) · [Modules](./modules/README.md)
+**Documents liés** : [VISION](./VISION.md) · [ARCHITECTURE](./ARCHITECTURE.md) · [Constitution AFFINIORA](./CONSTITUTION_AFFINIORA.md) · [Design system](./ux/design.md) · [Modules](./modules/README.md)
+
+> **Gouvernance** : toute évolution des règles éthiques passe par [CONSTITUTION_AFFINIORA.md](./CONSTITUTION_AFFINIORA.md) (procédure d'amendement Titre VII).
 
 ---
 

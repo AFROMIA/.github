@@ -23,23 +23,26 @@ Moteur IA propriétaire self-hosted : scoring compatibilité, personnalité, ant
 
 | Composant | État | Détail |
 |-----------|------|--------|
-| Microservice AFFINIORA | ✅ | Endpoints v1 + v2 (`/v1/analyze/profile-full`, Sarielle jobs) |
-| Contrat v2 UserProfileIA | ✅ | `CONTRACT_V2.md`, adaptateur legacy `profile_data_to_ia()` |
+| Microservice AFFINIORA | ✅ | Endpoints v1 + v2, admin `reindex-ecosystem`, `reindex-constitution` |
+| Constitution & garde-fous | ✅ | `constitution_validator.py`, KB `category: constitution`, logs refus |
+| Architecture cognition/conversation | ✅ | `cognition/`, `conversation/`, `domain_router` |
+| Contrat v2.1 ConversationContext | ✅ | `pillar`, `page`, `connect_mode` cross-repo |
+| KB écosystème | ✅ | 25+ chunks charte, indexeur markdown |
+| Contrat v2 UserProfileIA | ✅ | `CONTRACT_V2.md`, adaptateur legacy |
 | Intégration SAFIRI | ✅ | `profile_ia_aggregator`, `rag_service`, `ia_gating` |
 | Routeur LLM cloud/local | ✅ | Premium → cloud ; free → Qwen local |
-| Debug panel IA Lab | ✅ | Appels directs navigateur → AFFINIORA (CORS + admin key) |
-| Fallback score 65 | 🟡 | Indicateur « IA indisponible » en cours de généralisation |
-| Celery tasks | 🟡 | Inactif sans worker |
-| Tests AFFINIORA | ✅ | profile adapter, profile analysis, Sarielle instant |
+| Tests AFFINIORA | ✅ | `test_ecosystem_qa.py`, `test_constitution.py`, Sarielle, access policy |
 
 ## Fichiers clés
 
-- `AFFINIORA/services/ai-engine/app/engines/profile_analysis_engine.py`
-- `AFFINIORA/services/ai-engine/app/agents/llm_router.py`
+- `AFFINIORA/services/ai-engine/app/cognition/`
+- `AFFINIORA/services/ai-engine/app/conversation/`
+- `AFFINIORA/services/ai-engine/app/knowledge/seed_ecosystem.py`
+- `AFFINIORA/services/ai-engine/app/knowledge/seed_constitution.py`
+- `AFFINIORA/services/ai-engine/app/cognition/constitution_validator.py`
 - `SAFIRI/apps/backend/app/application/profile_ia_aggregator.py`
 - `SAFIRI/apps/backend/app/application/ia_gating.py`
 - `SAFIRI/packages/shared-types/src/profile-ia.ts`
-- Frontend : `IaLabTab`, `ProfileAnalysisClient`, `SwipeCardStack`
 
 ## Actions prioritaires
 

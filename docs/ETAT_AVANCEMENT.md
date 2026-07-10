@@ -1,7 +1,7 @@
 # AFROMIA / SAFIRI — État d'avancement réel
 
-**Version** : 2.4  
-**Date** : 9 juillet 2026  
+**Version** : 2.5  
+**Date** : 10 juillet 2026  
 **Statut** : Document de vérité technique — à mettre à jour à chaque sprint  
 
 **Documents liés** : [CHARTE](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
@@ -25,7 +25,7 @@
 
 ## 1. Synthèse exécutive
 
-> **Constat honnête (juillet 2026)** : charte de fondation v1.0 versionnée sur Git. **Sprint S5b Safiri Connect** en cours : migration UX `/discover` (modes contexte Connexions / Rencontre / Réseau), copy Connect, i18n FR/EN. Code backend discover inchangé ; staging AWS **bloqué IAM** (`afromia-dev-agent` sans politiques attachées).
+> **Constat honnête (juillet 2026)** : charte de fondation v1.0 versionnée sur Git. **Constitution AFFINIORA v1.0** livrée : cadre éthique, KB `constitution`, validateur pré/post Sarielle, registre angles d'attaque. **Sprint S5b Safiri Connect** en cours : migration UX `/discover` (modes contexte Connexions / Rencontre / Réseau), copy Connect, i18n FR/EN. **Restructuration Sarielle/AFFINIORA écosystème** livrée : KB charte, intents multi-piliers, `ConversationContext` v2.1, architecture `cognition/` + `conversation/`. Code backend discover inchangé ; staging AWS **bloqué IAM** (`afromia-dev-agent` sans politiques attachées).
 
 | Indicateur | Valeur estimée | Commentaire |
 |------------|----------------|-------------|

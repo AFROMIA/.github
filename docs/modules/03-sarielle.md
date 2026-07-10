@@ -10,7 +10,7 @@
 
 **Sarielle** est le **compagnon numérique personnel** d'AFROMIA — interface humaine d'AFFINIORA. Première fonction : aide à la navigation. Accessible sur homepage et pages info, repliable, avec choix de modèle. Pour utilisateurs connectés : accompagnement personnalisé (coach relationnel/pro, mémoire de vie avec consentement).
 
-> Rôle écosystème : [Charte de fondation](../CHARTE_FONDATION.md#les-personnalités-de-lécosystème)
+**Documents liés** : [Charte de fondation](../CHARTE_FONDATION.md) · [Constitution AFFINIORA](../CONSTITUTION_AFFINIORA.md) · [RECETTE](../RECETTE.md)
 
 ## Exigences clés
 
@@ -29,16 +29,28 @@
 
 | Composant | État | Détail |
 |-----------|------|--------|
-| Backend proxy | ✅ | `chat.py` : status, sync/async, jobs, feedback |
-| AFFINIORA agent | ✅ | `AFFINIORA/.../agents/sarielle.py` |
-| Frontend | ✅ | `/sarielle`, `SarielleFloatingHub`, `useSarielleChat` |
+| Backend proxy | ✅ | `chat.py` : status, sync/async, jobs, feedback, `conversation_context` v2.1 |
+| AFFINIORA agent | ✅ | `conversation/` + `agents/sarielle.py` — multi-piliers écosystème |
+| Frontend | ✅ | `/sarielle` (chips pilier), `SarielleFloatingHub`, `useSarielleChat` + page/connect_mode |
+| KB écosystème | ✅ | `seed_ecosystem.py`, RAG pillar/entity, tests `test_ecosystem_qa.py` |
+| Constitution v1.0 | ✅ | `seed_constitution.py`, `constitution_validator.py`, dernier rempart prompt + post-check |
+| Actions Sarielle v1 | 🟡 | `SarielleAction` (navigate, suggest_register) — pas d'Action Gateway DB |
 | Runtime | 🟡 | **502/offline si AFFINIORA down** |
-| Tests AFFINIORA | ✅ | 8+ tests Sarielle |
+| Tests AFFINIORA | ✅ | `test_ecosystem_qa.py`, `test_constitution.py`, Sarielle, access policy |
+
+## Intents Sarielle (juillet 2026)
+
+| Intent | Usage |
+|--------|-------|
+| `ecosystem_info` | AFROMIA, vision, produits, charte |
+| `pillar_guide` | Orientation par pilier (entreprendre, apprendre…) |
+| `product_navigation` | Liens vers modules/produits |
+| `conseil_profil`, `compatibilite`, … | SAFIRI Connect (rétrocompat) |
 
 ## Fichiers clés
 
-- Backend : `SAFIRI/apps/backend/app/api/v1/chat.py`
-- AFFINIORA : `AFFINIORA/services/ai-engine/app/agents/sarielle.py`
+- Backend : `SAFIRI/apps/backend/app/api/v1/chat.py`, `sarielle_enrichment.py`, `affiniora_helpers.py`
+- AFFINIORA : `AFFINIORA/services/ai-engine/app/conversation/`
 - Frontend : `SAFIRI/apps/frontend/src/app/sarielle/`, `hooks/useSarielleChat.ts`
 
 ## Actions prioritaires
