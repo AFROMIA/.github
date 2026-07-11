@@ -32,6 +32,12 @@ variable "environment" {
   default = "staging"
 }
 
+variable "affiniora_admin_key" {
+  description = "Clé admin partagée SAFIRI backend ↔ Affiniora ai-engine"
+  default     = "changeme-admin-key"
+  sensitive   = true
+}
+
 variable "project_name" {
   default = "afromia"
 }
@@ -208,7 +214,7 @@ resource "aws_cloudfront_distribution" "main" {
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }

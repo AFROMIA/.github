@@ -35,7 +35,7 @@
 | KB écosystème | ✅ | `seed_ecosystem.py`, RAG pillar/entity, tests `test_ecosystem_qa.py` |
 | Constitution v1.0 | ✅ | `seed_constitution.py`, `constitution_validator.py`, dernier rempart prompt + post-check |
 | Actions Sarielle v1 | 🟡 | `SarielleAction` (navigate, suggest_register) — pas d'Action Gateway DB |
-| Runtime | 🟡 | **502/offline si AFFINIORA down** |
+| Runtime | 🟡 | Staging : backend `affiniora: ok` ; badge UI après build frontend ; local via `make dev-affiniora` |
 | Tests AFFINIORA | ✅ | `test_ecosystem_qa.py`, `test_constitution.py`, Sarielle, access policy |
 
 ## Intents Sarielle (juillet 2026)
@@ -55,6 +55,7 @@
 
 ## Actions prioritaires
 
-1. Garantir AFFINIORA up dans dev (bloqueur B1)
-2. Recette navigation assistée (R-P1-08)
-3. UX offline claire (pas de réponses template trompeuses)
+1. **Bloqueur B1** : Affiniora up — local : [DEV_LOCAL_STACK](../../AFFINIORA/docs/DEV_LOCAL_STACK.md) ; staging : [ETAT_AVANCEMENT_AFFINIORA](../../AFFINIORA/docs/ETAT_AVANCEMENT_AFFINIORA.md)
+2. Recette R-AFF-02 à 05 (badge via backend en staging)
+3. Recette navigation assistée (R-P1-08)
+4. UX offline claire (pas de réponses template trompeuses)

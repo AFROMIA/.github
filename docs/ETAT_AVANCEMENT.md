@@ -1,10 +1,10 @@
 # AFROMIA / SAFIRI — État d'avancement réel
 
-**Version** : 2.5  
-**Date** : 10 juillet 2026  
+**Version** : 2.6  
+**Date** : 11 juillet 2026  
 **Statut** : Document de vérité technique — à mettre à jour à chaque sprint  
 
-**Documents liés** : [CHARTE](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md)
+**Documents liés** : [CHARTE](./CHARTE_FONDATION.md) · [VISION](./VISION.md) · [Spécification](./SPECIFICATION_FONCTIONNELLE.md) · [Recette](./RECETTE.md) · [Modules](./modules/README.md) · [**État Affiniora**](../AFFINIORA/docs/ETAT_AVANCEMENT_AFFINIORA.md)
 
 **Dépôts** : [SAFIRI](https://github.com/AFROMIA/SAFIRI) · [AFFINIORA](https://github.com/AFROMIA/AFFINIORA) · [Docs `.github`](https://github.com/AFROMIA/.github) · [Contrat IA v2](https://github.com/AFROMIA/AFFINIORA/blob/main/docs/CONTRACT_V2.md)
 
@@ -25,7 +25,7 @@
 
 ## 1. Synthèse exécutive
 
-> **Constat honnête (juillet 2026)** : charte de fondation v1.0 versionnée sur Git. **Constitution AFFINIORA v1.0** livrée : cadre éthique, KB `constitution`, validateur pré/post Sarielle, registre angles d'attaque. **Sprint S5b Safiri Connect** en cours : migration UX `/discover` (modes contexte Connexions / Rencontre / Réseau), copy Connect, i18n FR/EN. **Restructuration Sarielle/AFFINIORA écosystème** livrée : KB charte, intents multi-piliers, `ConversationContext` v2.1, architecture `cognition/` + `conversation/`. Code backend discover inchangé ; staging AWS **bloqué IAM** (`afromia-dev-agent` sans politiques attachées).
+> **Constat honnête (juillet 2026)** : charte de fondation v1.0 versionnée sur Git. **Constitution AFFINIORA v1.0** livrée. **Affiniora staging hors ligne** : badge debug OFF sur CloudFront (health navigateur → `localhost:8001` + SG ECS sans trafic inter-tâches). Correctifs en cours : proxy backend, Terraform SG/env. **Local testable** via `make dev-split` — voir [DEV_LOCAL_STACK](../AFFINIORA/docs/DEV_LOCAL_STACK.md). Sprint S5b Safiri Connect en cours.
 
 | Indicateur | Valeur estimée | Commentaire |
 |------------|----------------|-------------|
@@ -104,7 +104,7 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 | **Migration UX Safiri Connect** | Modes contexte `/discover`, copy Connect, MatchCelebration i18n, BrandLockup | 🚧 Phase 1–2 livrées en local ; recette ⬜ | Next.js, next-intl, design system |
 | **Résilience DB/Redis** | Couche `resilience.py` + client Redis dédié ; tests unitaires. Pas de chaos testing. | 1) Simuler panne Redis en dev 2) Circuit breaker dashboard 3) Alertes Prometheus | SRE, PostgreSQL, Redis, pytest |
 | **Déploiement AWS staging** | Terraform + scripts livrés ; ECR/ECS prêts ; IAM `afromia-dev-agent` sans droits create | 1) [IAM_BLOCKER](./infra/IAM_BLOCKER.md) 2) `bootstrap-aws.ps1` 3) smoke health checks | AWS IAM, Terraform, ECS, Docker |
-| **Debug panel IA Lab** | Appels directs navigateur → AFFINIORA. Fonctionnel si service up. | 1) Variables `NEXT_PUBLIC_AFFINIORA_*` 2) Masquer en prod | Next.js, CORS, sécurité clés |
+| **Debug panel IA Lab** | Badge OFF staging (ping direct `:8001`) ; fix proxy backend livré | 1) `terraform apply` + deploy 2) Recette R-AFF-02 staging | Next.js, ECS networking |
 
 ### Onboarding équipe distribuée
 
@@ -122,15 +122,16 @@ Tableau de pilotage pour recrutement, priorisation sprint et mitigation.
 
 | # | Bloqueur | Impact | Modules | Mitigation |
 |---|----------|--------|---------|------------|
-| B1 | **AFFINIORA + Celery non auto-lancés** | IA, Sarielle, analyse async HS | 03, 05, 19 | `make dev-split` documenté ; [start.md](../start.md) |
+| B1 | **AFFINIORA staging unreachable** | Sarielle OFF CloudFront ; IA Lab inactif | 03, 05 | [ETAT_AVANCEMENT_AFFINIORA](../AFFINIORA/docs/ETAT_AVANCEMENT_AFFINIORA.md) ; SG ECS + health proxy |
+| B1b | **AFFINIORA + Celery non auto-lancés (local)** | IA, Sarielle, analyse async HS en dev | 03, 05, 19 | `make dev-split` ; [DEV_LOCAL_STACK](../AFFINIORA/docs/DEV_LOCAL_STACK.md) |
 | B2 | **Secrets tiers vides** | Paiements, OAuth, push, Campay | 09, 14, 20 | Sprint config ; templates [env-profiles](./env-profiles/) |
 | B3 | **SMTP vide** | Gate email Discover bloqué | 02, 07 | `email_dev_mode` ou comptes seed staff |
 | B4 | **Recette nouvelles features absente** | Channels, wallet, speed dating non validés | 19–22 | Scénarios dans [RECETTE.md](./RECETTE.md) à étendre |
 | B5 | **Tests E2E insuffisants** | Régressions non détectées | Tous | Playwright parcours MVP + channels |
 | B6 | **CMS sans seed** | Homepage fallback i18n seul | 01, 13 | Publier contenu admin |
 | B7 | **Chat optimiste fragile** | Refresh nécessaire parfois | 08 | Fix P0 WebSocket ack |
-| B8 | **IAM AWS insuffisant** | Terraform apply impossible | 18 | [IAM_BLOCKER](./infra/IAM_BLOCKER.md) |
-| B9 | **Staging non recetté** | Pas d'URL publique validée | Tous | Deploy + smoke après IAM |
+| B8 | **IAM AWS** | Terraform apply / deploy | 18 | IAM OK confirmé — apply en cours |
+| B9 | **Staging Affiniora non recetté** | Sarielle 502 sur CloudFront | 03, 05 | R-AFF-01 à 05 après deploy |
 
 ---
 
