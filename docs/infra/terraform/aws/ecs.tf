@@ -100,11 +100,19 @@ resource "aws_ecs_task_definition" "services" {
       { name = "ENVIRONMENT", value = var.environment },
       { name = "REDIS_URL", value = "redis://${aws_elasticache_cluster.redis.cache_nodes[0].address}:6379/3" },
       { name = "MODEL_CACHE_DIR", value = "/models/cache" },
+      { name = "SARIELLE_PRELOAD_LLM", value = "false" },
+      { name = "LAZY_LOAD_MODELS", value = "true" },
+      { name = "SARIELLE_USE_LLM", value = "true" },
+      { name = "ADMIN_API_KEY", value = var.affiniora_admin_key },
     ] : each.key == "safiri-frontend" ? [
       { name = "NODE_ENV", value = "production" },
-      { name = "NEXT_PUBLIC_API_URL", value = "https://${aws_cloudfront_distribution.main.domain_name}/api" },
+      { name = "NEXT_PUBLIC_API_URL", value = "https://${aws_cloudfront_distribution.main.domain_name}" },
       { name = "NEXT_PUBLIC_WS_URL", value = "wss://${aws_cloudfront_distribution.main.domain_name}" },
-    ] : local.common_env
+      { name = "NEXT_PUBLIC_DEBUG", value = var.environment == "production" ? "false" : "true" },
+    ] : each.key == "safiri-backend" || each.key == "safiri-celery-worker" || each.key == "safiri-celery-beat" ? concat(local.common_env, [
+      { name = "DEBUG_ENABLED", value = var.environment == "production" ? "false" : "true" },
+      { name = "AFFINIORA_ADMIN_KEY", value = var.affiniora_admin_key },
+    ]) : local.common_env
 
     logConfiguration = {
       logDriver = "awslogs"

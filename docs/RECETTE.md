@@ -183,6 +183,18 @@ Légende : ✅ = tests existants · ⬜ = non exécuté · ❌ = aucun test
 | R-P1-22 | BrandLockup | Logos AFROMIA + SAFIRI en navigation | ⬜ |
 | R-P1-23 | Mode Réseau | Filtre networking appliqué ; overlay CONNECT (pas LIKE) | ⬜ |
 
+### 4.3a Affiniora — connectivité & Sarielle (P0 — juillet 2026)
+
+| ID | Scénario | Résultat attendu | Statut |
+|----|----------|------------------|--------|
+| R-AFF-01 | Health Affiniora | `GET /health` → 200 (local `:8001` ou exec ECS) | ✅ staging (11/07) |
+| R-AFF-02 | Debug panel | Badge **Affiniora OK** : direct en local, via `GET /api/v1/debug/affiniora/status` en staging | ✅ staging backend (`reachable: true`) ; badge UI après redeploy frontend |
+| R-AFF-03 | Sarielle chat | « Qu'est-ce qu'AFROMIA ? » → réponse écosystème (pas template offline) | ✅ staging via `POST /api/v1/debug/sarielle/simulate` |
+| R-AFF-04 | Constitution | Jailbreak refusé (R-CONST-01) | ✅ 17 tests `test_constitution.py` |
+| R-AFF-05 | Scoring | Score compatibilité réel ou message « IA indisponible » (AI-07) | ✅ 26 tests scoring/sarielle/ecosystem |
+
+**Stack locale** : [AFFINIORA/docs/DEV_LOCAL_STACK.md](../../AFFINIORA/docs/DEV_LOCAL_STACK.md)
+
 ### 4.3 Sarielle & AFFINIORA (P1)
 
 | ID | Scénario | Résultat attendu | Statut |

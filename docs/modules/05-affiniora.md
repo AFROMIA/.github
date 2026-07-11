@@ -32,6 +32,8 @@ Moteur IA propriétaire self-hosted : scoring compatibilité, personnalité, ant
 | Intégration SAFIRI | ✅ | `profile_ia_aggregator`, `rag_service`, `ia_gating` |
 | Routeur LLM cloud/local | ✅ | Premium → cloud ; free → Qwen local |
 | Tests AFFINIORA | ✅ | `test_ecosystem_qa.py`, `test_constitution.py`, Sarielle, access policy |
+| **Staging ECS** | 🟡 | Reachable via backend après SG + env (11/07) ; redeploy frontend SAFIRI pour badge UI |
+| **Local testable** | ✅ | Stack `make dev-split` — [DEV_LOCAL_STACK](../../AFFINIORA/docs/DEV_LOCAL_STACK.md) |
 
 ## Fichiers clés
 
@@ -46,6 +48,7 @@ Moteur IA propriétaire self-hosted : scoring compatibilité, personnalité, ant
 
 ## Actions prioritaires
 
-1. Recette bout-en-bout analyse profil + coaching premium
-2. AFFINIORA + Celery obligatoires dans checklist dev (`make dev-split`)
-3. Recette scores réels sur feed seed (R-P0-04)
+1. Remettre Affiniora en ligne staging (SG ECS, env OOM, health via backend) — [ETAT_AVANCEMENT_AFFINIORA](../../AFFINIORA/docs/ETAT_AVANCEMENT_AFFINIORA.md)
+2. Recette R-AFF-01 à 05 (local puis staging)
+3. Recette bout-en-bout analyse profil + coaching premium
+4. AFFINIORA + Celery obligatoires dans checklist dev (`make dev-split`)

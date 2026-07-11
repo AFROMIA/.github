@@ -121,16 +121,23 @@ terraform apply -var="db_password=<secret>"
 | `ENVIRONMENT` | staging | production |
 | `DEBUG_ENABLED` | true | false |
 | `DATABASE_SSL` | true | true |
-| `AFFINIORA_API_URL` | http://affiniora-ai-engine:8001 | idem (réseau interne VPC) |
-| `NEXT_PUBLIC_API_URL` | https://<cloudfront>/api | https://app.afromia.com/api |
+| `AFFINIORA_API_URL` | http://affiniora-ai-engine.afromia-staging.local:8001 | idem (Cloud Map, **privé VPC**) |
+| `AFFINIORA_ADMIN_KEY` | aligné `ADMIN_API_KEY` Affiniora | idem |
+| `NEXT_PUBLIC_API_URL` | https://<cloudfront> | https://app.afromia.com |
+| `NEXT_PUBLIC_DEBUG` | true (staging) | false |
+
+> **Affiniora n'est pas exposé sur CloudFront.** Le navigateur ne joint pas `:8001` directement. Le debug panel utilise `GET /api/v1/debug/affiniora/status` (proxy backend). En local, ping direct `localhost:8001` reste actif.
 
 Les secrets sensibles sont dans **AWS Secrets Manager**, injectés dans les task definitions ECS.
 
 ## Communication inter-services
 
 ```
-safiri-backend ──REST──► affiniora-ai-engine:8001
-     │                        │
+Navigateur (CloudFront)
+     │
+     ▼
+safiri-backend :8000 ──REST──► affiniora-ai-engine.afromia-staging.local:8001
+     │                        (service privé ECS — pas de route publique)
      │ PostgreSQL             │ Redis (cache modèles)
      ▼                        ▼
    RDS                    ElastiCache
